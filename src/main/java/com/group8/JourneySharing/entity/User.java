@@ -6,10 +6,15 @@ public class User {
 
     @Id
     public String id;
+    public String username;
     public String firstName;
     public String lastName;
 
     public User() {}
+
+    public User(String username) {
+        this.username = username;
+    }
 
     public User(String firstName, String lastName) {
         this.firstName = firstName;
@@ -40,11 +45,19 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public String toString() {
         return String.format(
-                "User[id=%s, firstName='%s', lastName='%s']",
-                id, firstName, lastName);
+                "User[id=%s, username=%s, firstName='%s', lastName='%s']",
+                id, username,  firstName, lastName);
     }
 
 }

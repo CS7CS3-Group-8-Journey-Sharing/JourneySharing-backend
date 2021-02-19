@@ -13,6 +13,6 @@ public class JourneyController {
 
     @GetMapping(value = "/hi")
     public ResponseEntity<String> hi() {
-        return new ResponseEntity<>("hello", HttpStatus.OK);
+        return new ResponseEntity<>("Journey!", HttpStatus.OK);
     }
 }
