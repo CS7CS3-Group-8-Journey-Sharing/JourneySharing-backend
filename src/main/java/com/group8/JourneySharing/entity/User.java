@@ -1,9 +1,12 @@
 package com.group8.JourneySharing.entity;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+
 
 @Document(value = "user")
 public class User {
@@ -18,6 +21,7 @@ public class User {
     private String mobileNumber;
     private String iban;
     private List<Journey> history;
+    //private Binary image;
 
     public User() {
     }

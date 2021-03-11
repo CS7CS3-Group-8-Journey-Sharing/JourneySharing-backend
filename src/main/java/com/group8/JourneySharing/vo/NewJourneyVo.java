@@ -1,59 +1,55 @@
-package com.group8.JourneySharing.entity;
+package com.group8.JourneySharing.vo;
 
-
+import com.group8.JourneySharing.entity.Location;
+import com.group8.JourneySharing.entity.ModeOfTransport;
+import com.group8.JourneySharing.entity.User;
 import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
-
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
-public class Journey {
+public class NewJourneyVo {
 
-    @Id
-    private String journeyId;
+
     private boolean recurring;
-    private boolean completed;
+    @NotNull(message = "Owner is a required parameter")
     private User owner;
-    private List<User> participants;
+    @NotNull(message = "Start location is a required parameter")
     private Location startLocation;
+    @NotNull(message = "End Location is a required parameter")
     private Location endLocation;
-    private int maxParticipants;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private Date startTime;
-    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private Date endTime;
-    private ModeOfTransport modeOfTransport;
-    private List<Location> stops;
 
-    public Journey() {
+    private int maxParticipants;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @NotNull(message = "StartTime is a required parameter")
+    private Date startTime;
+
+    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @NotNull(message = "EndTime is a required parameter")
+    private Date endTime;
+    @NotNull(message = " Mode of transport is a required parameter")
+    private ModeOfTransport modeOfTransport;
+
+
+    public NewJourneyVo() {
+        super();
     }
-// Add timestap Timestamp startTime,
-    //Timestamp endTime,
-    public Journey(String journeyId, boolean recurring, boolean completed, User owner, List<User> participants,
-                   Location startLocation, Location endLocation, int maxParticipants, Date startTime,Date endTime, ModeOfTransport modeOfTransport, List<Location> stops) {
-        this.journeyId = journeyId;
+
+    public NewJourneyVo(boolean recurring, User owner, Location startLocation, Location endLocation, int maxParticipants, Date startTime, Date endTime, ModeOfTransport modeOfTransport) {
         this.recurring = recurring;
-        this.completed = completed;
         this.owner = owner;
-        this.participants = participants;
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.maxParticipants = maxParticipants;
         this.startTime = startTime;
         this.endTime = endTime;
         this.modeOfTransport = modeOfTransport;
-        this.stops = stops;
     }
 
-    public String getJourneyId() {
-        return journeyId;
-    }
-
-    public void setJourneyId(String journeyId) {
-        this.journeyId = journeyId;
-    }
 
     public boolean isRecurring() {
         return recurring;
@@ -63,28 +59,12 @@ public class Journey {
         this.recurring = recurring;
     }
 
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
-
     public User getOwner() {
         return owner;
     }
 
     public void setOwner(User owner) {
         this.owner = owner;
-    }
-
-    public List<User> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(List<User> participants) {
-        this.participants = participants;
     }
 
     public Location getStartLocation() {
@@ -135,29 +115,17 @@ public class Journey {
         this.modeOfTransport = modeOfTransport;
     }
 
-    public List<Location> getStops() {
-        return stops;
-    }
-
-    public void setStops(List<Location> stops) {
-        this.stops = stops;
-    }
-
     @Override
     public String toString() {
-        return "Journey{" +
-                "journeyId='" + journeyId + '\'' +
-                ", recurring=" + recurring +
-                ", completed=" + completed +
+        return "NewJourneyVo{" +
+                "recurring=" + recurring +
                 ", owner=" + owner +
-                ", participants=" + participants +
                 ", startLocation=" + startLocation +
                 ", endLocation=" + endLocation +
                 ", maxParticipants=" + maxParticipants +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", modeOfTransport=" + modeOfTransport +
-                ", stops=" + stops +
                 '}';
     }
 }
