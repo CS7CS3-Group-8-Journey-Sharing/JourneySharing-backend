@@ -3,27 +3,25 @@ package com.group8.JourneySharing.entity;
 import org.springframework.data.annotation.Id;
 
 public class Location {
-
-    @Id
-    public String locationId;
+    public String name;
     public double lat;
     public double lng;
 
     public Location() {
     }
 
-    public Location(String locationId, double lat, double lng) {
-        this.locationId = locationId;
+    public Location(String name, double lat, double lng) {
+        this.name = name;
         this.lat = lat;
         this.lng = lng;
     }
 
-    public String getLocationId() {
-        return locationId;
+    public String getName() {
+        return name;
     }
 
-    public void setLocationId(String locationId) {
-        this.locationId = locationId;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getLat() {
@@ -45,7 +43,7 @@ public class Location {
     @Override
     public String toString() {
         return "Location{" +
-                "locationId='" + locationId + '\'' +
+                "name='" + name + '\'' +
                 ", lat=" + lat +
                 ", lng=" + lng +
                 '}';
