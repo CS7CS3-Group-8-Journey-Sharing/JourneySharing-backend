@@ -7,4 +7,6 @@ public interface JourneyService {
 
 
     Journey createJourney(NewJourneyVo newJourney);
+
+    Journey getJourneyByID(String journeyID);
 }

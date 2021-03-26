@@ -10,6 +10,7 @@ import com.group8.JourneySharing.vo.UserDetailsVo;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import static org.junit.Assert.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -25,9 +26,11 @@ public class JourneyServiceImplTest {
 
 
     private JourneyServiceImpl journeyServiceImpl;
+    private UserServiceImpl userServiceImpl;
 
     private Journey journey;
     private NewJourneyVo newjourney;
+    private NewUserVo newUser;
 
     @Mock
     private JourneyRepository journeyRepository;
@@ -41,7 +44,7 @@ public class JourneyServiceImplTest {
     }
 
     @Test
-    public void testForCreteJourney(){
+    public void testForCreateJourney(){
         given(journeyRepository.save(ArgumentMatchers.any(Journey.class))).willReturn(journey);
         journeyServiceImpl.createJourney(newjourney);
 
