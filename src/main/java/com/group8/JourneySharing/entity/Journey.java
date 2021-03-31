@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Journey {
 
@@ -16,7 +16,7 @@ public class Journey {
     private boolean recurring;
     private boolean completed;
     private User owner;
-    private List<User> participants;
+    private ArrayList<User> participants;
     private Location startLocation;
     private Location endLocation;
     private int maxParticipants;
@@ -25,14 +25,14 @@ public class Journey {
     //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date endTime;
     private ModeOfTransport modeOfTransport;
-    private List<Location> stops;
+    private ArrayList<Location> stops;
 
     public Journey() {
     }
 // Add timestap Timestamp startTime,
     //Timestamp endTime,
-    public Journey(String journeyId, boolean recurring, boolean completed, User owner, List<User> participants,
-                   Location startLocation, Location endLocation, int maxParticipants, Date startTime,Date endTime, ModeOfTransport modeOfTransport, List<Location> stops) {
+    public Journey(String journeyId, boolean recurring, boolean completed, User owner, ArrayList<User> participants,
+                   Location startLocation, Location endLocation, int maxParticipants, Date startTime, Date endTime, ModeOfTransport modeOfTransport, ArrayList<Location> stops) {
         this.journeyId = journeyId;
         this.recurring = recurring;
         this.completed = completed;
@@ -79,12 +79,20 @@ public class Journey {
         this.owner = owner;
     }
 
-    public List<User> getParticipants() {
+    public ArrayList<User> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(List<User> participants) {
+    public void setParticipants(ArrayList<User> participants) {
         this.participants = participants;
+    }
+
+    public void addParticipant(User participant) {
+        participants.add(participant);
+    }
+
+    public void removeParticipant(User participant) {
+        participants.remove(participant);
     }
 
     public Location getStartLocation() {
@@ -135,11 +143,11 @@ public class Journey {
         this.modeOfTransport = modeOfTransport;
     }
 
-    public List<Location> getStops() {
+    public ArrayList<Location> getStops() {
         return stops;
     }
 
-    public void setStops(List<Location> stops) {
+    public void setStops(ArrayList<Location> stops) {
         this.stops = stops;
     }
 
@@ -154,6 +162,7 @@ public class Journey {
                 ", startLocation=" + startLocation +
                 ", endLocation=" + endLocation +
                 ", maxParticipants=" + maxParticipants +
+                ", participants=" + participants +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", modeOfTransport=" + modeOfTransport +

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -46,8 +47,10 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userEmail);
         user.setHistory(new ArrayList<Journey>());
         User savedUser = userRepository.save(user);
-        LOGGER.info("New User Saved {}",savedUser.getUserName());
-        return savedUser.getUserName();
+        //LOGGER.info("New User Saved {}",savedUser.getUserName());
+        //return savedUser.getUserName();
+        LOGGER.info("User saved with id {}", savedUser.getUserId());
+        return savedUser.getUserId();
     }
 
     @Override
@@ -63,5 +66,15 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-
+    @Override
+    public User getUserByID(String id) {
+        Optional<User> userOptional = userRepository.findById(id.toLowerCase());
+        if(userOptional == null || userOptional.isEmpty()){
+            LOGGER.error("Invalid userId");
+            throw new BadRequestException("Invalid userId");
+        }
+        User user = userOptional.get();
+        LOGGER.info("User Fetched Successfully {}", user);
+        return user;
+    }
 }

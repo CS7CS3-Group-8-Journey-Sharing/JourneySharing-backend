@@ -9,7 +9,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class NewJourneyVo {
 
@@ -23,6 +24,8 @@ public class NewJourneyVo {
     private Location endLocation;
 
     private int maxParticipants;
+    @NotNull(message = "Participants is a required parameter")
+    private ArrayList<User> participants;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @NotNull(message = "StartTime is a required parameter")
@@ -39,12 +42,13 @@ public class NewJourneyVo {
         super();
     }
 
-    public NewJourneyVo(boolean recurring, User owner, Location startLocation, Location endLocation, int maxParticipants, Date startTime, Date endTime, ModeOfTransport modeOfTransport) {
+    public NewJourneyVo(boolean recurring, User owner, Location startLocation, Location endLocation, int maxParticipants, ArrayList<User> participants, Date startTime, Date endTime, ModeOfTransport modeOfTransport) {
         this.recurring = recurring;
         this.owner = owner;
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.maxParticipants = maxParticipants;
+        this.participants = participants;
         this.startTime = startTime;
         this.endTime = endTime;
         this.modeOfTransport = modeOfTransport;
@@ -91,6 +95,14 @@ public class NewJourneyVo {
         this.maxParticipants = maxParticipants;
     }
 
+    public ArrayList<User> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(ArrayList<User> participants) {
+        this.participants = participants;
+    }
+
     public Date getStartTime() {
         return startTime;
     }
@@ -123,6 +135,7 @@ public class NewJourneyVo {
                 ", startLocation=" + startLocation +
                 ", endLocation=" + endLocation +
                 ", maxParticipants=" + maxParticipants +
+                ", participants=" + participants +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", modeOfTransport=" + modeOfTransport +
