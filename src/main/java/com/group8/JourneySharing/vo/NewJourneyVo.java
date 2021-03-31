@@ -16,8 +16,8 @@ public class NewJourneyVo {
 
 
     private boolean recurring;
-    @NotNull(message = "Owner is a required parameter")
-    private User owner;
+    @NotNull(message = "Owner ID is a required parameter")
+    private String ownerId;
     @NotNull(message = "Start location is a required parameter")
     private Location startLocation;
     @NotNull(message = "End Location is a required parameter")
@@ -25,7 +25,7 @@ public class NewJourneyVo {
 
     private int maxParticipants;
     @NotNull(message = "Participants is a required parameter")
-    private ArrayList<User> participants;
+    private ArrayList<String> participantIds;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @NotNull(message = "StartTime is a required parameter")
@@ -42,13 +42,13 @@ public class NewJourneyVo {
         super();
     }
 
-    public NewJourneyVo(boolean recurring, User owner, Location startLocation, Location endLocation, int maxParticipants, ArrayList<User> participants, Date startTime, Date endTime, ModeOfTransport modeOfTransport) {
+    public NewJourneyVo(boolean recurring, String ownerId, Location startLocation, Location endLocation, int maxParticipants, ArrayList<String> participantIds, Date startTime, Date endTime, ModeOfTransport modeOfTransport) {
         this.recurring = recurring;
-        this.owner = owner;
+        this.ownerId = ownerId;
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.maxParticipants = maxParticipants;
-        this.participants = participants;
+        this.participantIds = participantIds;
         this.startTime = startTime;
         this.endTime = endTime;
         this.modeOfTransport = modeOfTransport;
@@ -63,12 +63,12 @@ public class NewJourneyVo {
         this.recurring = recurring;
     }
 
-    public User getOwner() {
-        return owner;
+    public String getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
     public Location getStartLocation() {
@@ -95,12 +95,12 @@ public class NewJourneyVo {
         this.maxParticipants = maxParticipants;
     }
 
-    public ArrayList<User> getParticipants() {
-        return participants;
+    public ArrayList<String> getParticipantIds() {
+        return participantIds;
     }
 
-    public void setParticipants(ArrayList<User> participants) {
-        this.participants = participants;
+    public void setParticipants(ArrayList<String> participantIds) {
+        this.participantIds = participantIds;
     }
 
     public Date getStartTime() {
@@ -131,11 +131,11 @@ public class NewJourneyVo {
     public String toString() {
         return "NewJourneyVo{" +
                 "recurring=" + recurring +
-                ", owner=" + owner +
+                ", ownerId=" + ownerId +
                 ", startLocation=" + startLocation +
                 ", endLocation=" + endLocation +
                 ", maxParticipants=" + maxParticipants +
-                ", participants=" + participants +
+                ", participantIds=" + participantIds +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", modeOfTransport=" + modeOfTransport +

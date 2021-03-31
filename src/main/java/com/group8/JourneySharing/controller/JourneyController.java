@@ -37,7 +37,7 @@ public class JourneyController {
     public ResponseEntity<Journey> createJourney(@RequestBody @Valid NewJourneyVo newJourney) throws Exception {
         LOGGER.info("createjourney initiated: " + newJourney.toString() );
         Journey savedJourney = journeyService.createJourney(newJourney);
-        LOGGER.info("createjourney completed: " + newJourney.toString() );
+        LOGGER.info("createjourney completed: " + savedJourney.toString() );
         return new ResponseEntity<>(savedJourney, HttpStatus.CREATED);
     }
 
