@@ -2,15 +2,11 @@ package com.group8.JourneySharing.vo;
 
 import com.group8.JourneySharing.entity.Location;
 import com.group8.JourneySharing.entity.ModeOfTransport;
-import com.group8.JourneySharing.entity.User;
-import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class NewJourneyVo {
 

@@ -2,11 +2,9 @@ package com.group8.JourneySharing.controller;
 
 
 import com.group8.JourneySharing.entity.Journey;
-import com.group8.JourneySharing.entity.User;
 import com.group8.JourneySharing.service.JourneyService;
 import com.group8.JourneySharing.service.UserService;
 import com.group8.JourneySharing.vo.NewJourneyVo;
-import com.group8.JourneySharing.vo.NewUserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +40,11 @@ public class JourneyController {
     }
 
     @PutMapping(value = "/joinjourney/{journeyID}")
-    public Journey joinJourney(@PathVariable String journeyID, @RequestBody String userID) throws Exception {
+    public Journey joinJourney(@PathVariable String journeyID, @RequestBody String userId) throws Exception {
         LOGGER.info("joinJourney initiated...");
         Journey journey = journeyService.getJourneyByID(journeyID);
-        User participant = userService.getUserByID(userID);
-        journey.addParticipant(participant);
-        LOGGER.info("Added user with id {} to participants of journey with id {}", participant.getUserId(), journey.getJourneyId());
+        journey.addParticipant(userId);
+        LOGGER.info("Added user with id {} to participants of journey with id {}", userId, journey.getJourneyId());
         LOGGER.info("joinJourney completed...");
         return journey;
     }
