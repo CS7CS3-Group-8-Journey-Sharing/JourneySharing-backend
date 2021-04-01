@@ -3,7 +3,6 @@ package com.group8.JourneySharing.service.impl;
 import java.util.Optional;
 import java.util.ArrayList;
 
-import com.group8.JourneySharing.converters.IdsToUsersListConverter;
 import com.group8.JourneySharing.entity.Journey;
 import com.group8.JourneySharing.entity.User;
 import com.group8.JourneySharing.repository.JourneyRepository;
@@ -43,8 +42,6 @@ public class JourneyServiceImpl implements JourneyService {
             mapper.skip(Journey::setJourneyId); // It was setting the JourneyID with ownerID? Might be bigger problem
             // maps empty ArrayList to Journey ArrayList<Users> participants and then I add them separately below
             mapper.map(src -> new ArrayList<User>(), Journey::setParticipants);
-            //TODO: make this actually work, userService in IdsToUsersListConverter is null. Not very important though
-            //mapper.using(new IdsToUsersListConverter()).map(NewJourneyVo::getParticipantIds, Journey::setParticipants);
         });
 
         Journey journey = modelMapper.map(newJourney, Journey.class);
