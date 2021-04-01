@@ -5,7 +5,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.ArrayList;
 
@@ -15,8 +14,8 @@ public class Journey {
     private String journeyId;
     private boolean recurring;
     private boolean completed;
-    private User owner;
-    private ArrayList<User> participants;
+    private String ownerId;
+    private ArrayList<String> participantIds;
     private Location startLocation;
     private Location endLocation;
     private int maxParticipants;
@@ -31,13 +30,13 @@ public class Journey {
     }
 // Add timestap Timestamp startTime,
     //Timestamp endTime,
-    public Journey(String journeyId, boolean recurring, boolean completed, User owner, ArrayList<User> participants,
+    public Journey(String journeyId, boolean recurring, boolean completed, String ownerId, ArrayList<String> participantIds,
                    Location startLocation, Location endLocation, int maxParticipants, Date startTime, Date endTime, ModeOfTransport modeOfTransport, ArrayList<Location> stops) {
         this.journeyId = journeyId;
         this.recurring = recurring;
         this.completed = completed;
-        this.owner = owner;
-        this.participants = participants;
+        this.ownerId = ownerId;
+        this.participantIds = participantIds;
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.maxParticipants = maxParticipants;
@@ -71,28 +70,28 @@ public class Journey {
         this.completed = completed;
     }
 
-    public User getOwner() {
-        return owner;
+    public String getOwner() {
+        return ownerId;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setOwner(String ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public ArrayList<User> getParticipants() {
-        return participants;
+    public ArrayList<String> getParticipantIds() {
+        return participantIds;
     }
 
-    public void setParticipants(ArrayList<User> participants) {
-        this.participants = participants;
+    public void setParticipantIds(ArrayList<String> participantIds) {
+        this.participantIds = participantIds;
     }
 
-    public void addParticipant(User participant) {
-        participants.add(participant);
+    public void addParticipant(String participantId) {
+        participantIds.add(participantId);
     }
 
-    public void removeParticipant(User participant) {
-        participants.remove(participant);
+    public void removeParticipant(String participantId) {
+        participantIds.remove(participantId);
     }
 
     public Location getStartLocation() {
@@ -157,12 +156,11 @@ public class Journey {
                 "journeyId='" + journeyId + '\'' +
                 ", recurring=" + recurring +
                 ", completed=" + completed +
-                ", owner=" + owner +
-                ", participants=" + participants +
+                ", ownerId=" + ownerId +
+                ", participantIds=" + participantIds +
                 ", startLocation=" + startLocation +
                 ", endLocation=" + endLocation +
                 ", maxParticipants=" + maxParticipants +
-                ", participants=" + participants +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", modeOfTransport=" + modeOfTransport +

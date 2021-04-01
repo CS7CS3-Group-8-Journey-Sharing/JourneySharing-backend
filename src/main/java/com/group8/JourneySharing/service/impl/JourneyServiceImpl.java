@@ -1,12 +1,11 @@
 package com.group8.JourneySharing.service.impl;
 
 import java.util.Optional;
-import java.util.ArrayList;
 
 import com.group8.JourneySharing.entity.Journey;
-import com.group8.JourneySharing.entity.User;
 import com.group8.JourneySharing.repository.JourneyRepository;
 import com.group8.JourneySharing.service.JourneyService;
+import com.group8.JourneySharing.service.UserService;
 import com.group8.JourneySharing.vo.NewJourneyVo;
 import com.group8.JourneySharing.exception.BadRequestException;
 import org.modelmapper.ModelMapper;
@@ -29,11 +28,19 @@ public class JourneyServiceImpl implements JourneyService {
         this.journeyRepository = journeyRepository;
     }
 
+    @Autowired
+    private UserService userService;
+
+    public JourneyServiceImpl() {
+        modelMapper.typeMap(NewJourneyVo.class, Journey.class).addMappings(mapper -> {
+            mapper.skip(Journey::setJourneyId); // mapper sets the JourneyId with the ownerId!?!
+        });
+    }
+
     @Override
     public Journey createJourney(NewJourneyVo newJourney) {
         Journey journey = modelMapper.map(newJourney, Journey.class);
-        Journey savedJourney  = journeyRepository.save(journey);
-        savedJourney.setParticipants(new ArrayList<User>());
+        Journey savedJourney = journeyRepository.save(journey);
         LOGGER.info("Journey with id {} created", savedJourney.getJourneyId());
         return savedJourney;
     }
@@ -41,7 +48,7 @@ public class JourneyServiceImpl implements JourneyService {
     @Override
     public Journey getJourneyByID(String journeyID) {
         Optional<Journey> journeyOptional = journeyRepository.findById(journeyID.toLowerCase());
-        if(journeyOptional == null || journeyOptional.isEmpty()){
+        if (!journeyOptional.isPresent()) {
             LOGGER.error("Invalid journeyID");
             throw new BadRequestException("Invalid journeyID");
         }

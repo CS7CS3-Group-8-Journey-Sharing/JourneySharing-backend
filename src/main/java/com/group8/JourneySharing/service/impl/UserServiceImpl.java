@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByID(String id) {
         Optional<User> userOptional = userRepository.findById(id.toLowerCase());
-        if(userOptional == null || userOptional.isEmpty()){
+        if(!userOptional.isPresent()) {
             LOGGER.error("Invalid userId");
             throw new BadRequestException("Invalid userId");
         }
