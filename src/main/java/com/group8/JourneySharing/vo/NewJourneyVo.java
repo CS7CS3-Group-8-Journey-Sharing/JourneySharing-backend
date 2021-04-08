@@ -11,6 +11,8 @@ import java.util.ArrayList;
 public class NewJourneyVo {
 
 
+    @NotNull(message = "Journey name is a required parameter")
+    private String name;
     private boolean recurring;
     @NotNull(message = "Owner ID is a required parameter")
     private String ownerId;
@@ -38,7 +40,8 @@ public class NewJourneyVo {
         super();
     }
 
-    public NewJourneyVo(boolean recurring, String ownerId, Location startLocation, Location endLocation, int maxParticipants, ArrayList<String> participantIds, Date startTime, Date endTime, ModeOfTransport modeOfTransport) {
+    public NewJourneyVo(String name, boolean recurring, String ownerId, Location startLocation, Location endLocation, int maxParticipants, ArrayList<String> participantIds, Date startTime, Date endTime, ModeOfTransport modeOfTransport) {
+        this.name = name;
         this.recurring = recurring;
         this.ownerId = ownerId;
         this.startLocation = startLocation;
@@ -50,6 +53,9 @@ public class NewJourneyVo {
         this.modeOfTransport = modeOfTransport;
     }
 
+    public String getName() { return name; }
+
+    public void setName(String name) { this.name = name; }
 
     public boolean isRecurring() {
         return recurring;
@@ -95,7 +101,7 @@ public class NewJourneyVo {
         return participantIds;
     }
 
-    public void setParticipants(ArrayList<String> participantIds) {
+    public void setParticipantsIds(ArrayList<String> participantIds) {
         this.participantIds = participantIds;
     }
 
@@ -126,7 +132,8 @@ public class NewJourneyVo {
     @Override
     public String toString() {
         return "NewJourneyVo{" +
-                "recurring=" + recurring +
+                "name=" + name +
+                ", recurring=" + recurring +
                 ", ownerId=" + ownerId +
                 ", startLocation=" + startLocation +
                 ", endLocation=" + endLocation +

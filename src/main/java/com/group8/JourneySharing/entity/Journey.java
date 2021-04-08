@@ -12,6 +12,7 @@ public class Journey {
 
     @Id
     private String journeyId;
+    private String name;
     private boolean recurring;
     private boolean completed;
     private String ownerId;
@@ -28,11 +29,13 @@ public class Journey {
 
     public Journey() {
     }
-// Add timestap Timestamp startTime,
+
+    // Add timestap Timestamp startTime,
     //Timestamp endTime,
-    public Journey(String journeyId, boolean recurring, boolean completed, String ownerId, ArrayList<String> participantIds,
+    public Journey(String journeyId, String name, boolean recurring, boolean completed, String ownerId, ArrayList<String> participantIds,
                    Location startLocation, Location endLocation, int maxParticipants, Date startTime, Date endTime, ModeOfTransport modeOfTransport, ArrayList<Location> stops) {
         this.journeyId = journeyId;
+        this.name = name;
         this.recurring = recurring;
         this.completed = completed;
         this.ownerId = ownerId;
@@ -54,6 +57,10 @@ public class Journey {
         this.journeyId = journeyId;
     }
 
+    public String getName() { return name; }
+
+    public void setName(String name) { this.name = name; }
+
     public boolean isRecurring() {
         return recurring;
     }
@@ -70,11 +77,11 @@ public class Journey {
         this.completed = completed;
     }
 
-    public String getOwner() {
+    public String getOwnerId() {
         return ownerId;
     }
 
-    public void setOwner(String ownerId) {
+    public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
     }
 
@@ -154,6 +161,7 @@ public class Journey {
     public String toString() {
         return "Journey{" +
                 "journeyId='" + journeyId + '\'' +
+                ", name='" + name +
                 ", recurring=" + recurring +
                 ", completed=" + completed +
                 ", ownerId=" + ownerId +
