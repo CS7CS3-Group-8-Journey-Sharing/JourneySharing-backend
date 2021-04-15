@@ -3,9 +3,8 @@ package com.group8.JourneySharing.vo;
 import javax.validation.constraints.NotEmpty;
 
 public class NewUserVo {
-
-    @NotEmpty(message = "userName is a required parameter")
-    private String userName;
+    @NotEmpty(message = "email is a required parameter")
+    private String email;
 
     @NotEmpty(message = "password is a required parameter")
     private String password;
@@ -16,27 +15,22 @@ public class NewUserVo {
     @NotEmpty(message = "lastName is a required parameter")
     private String lastName;
 
-    @NotEmpty(message = "email is a required parameter")
-    private String email;
-
     public NewUserVo() {
         super();
     }
 
-    public NewUserVo(String userName, String password, String firstName, String lastName, String email) {
-        this.userName = userName;
+    public NewUserVo(String email, String password, String firstName, String lastName) {
+        this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getPassword() {
@@ -63,22 +57,13 @@ public class NewUserVo {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     @Override
     public String toString() {
         return "NewUser{" +
-                "userName='" + userName + '\'' +
+                "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
                 '}';
     }
 

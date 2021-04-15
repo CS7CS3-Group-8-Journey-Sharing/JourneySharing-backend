@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
@@ -22,16 +23,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
-    @PostMapping(value = "/adduser")
-    public ResponseEntity<String> addUser( @RequestBody @Valid NewUserVo newUser) throws Exception {
-        LOGGER.info("AddUser initiated: " + newUser.toString() );
-        String userName = userService.addUser(newUser);
-        LOGGER.info("AddUser completed: " + newUser.toString() );
-        return new ResponseEntity<>(userName, HttpStatus.CREATED);
-    }
-    @GetMapping("/{email}")
-    public ResponseEntity<UserDetailsVo> getUserByEmail(@PathVariable String email) throws Exception {
+    // dont do {email}
+    @GetMapping("/details")
+    public ResponseEntity<UserDetailsVo> getUserByEmail(@RequestParam String email) throws Exception {
         LOGGER.info("Get User initiated: " + email);
         UserDetailsVo user = userService.getUserByEmail(email);
         LOGGER.info("AddUser completed: " + email);
