@@ -34,8 +34,8 @@ public class JourneyController {
         return new ResponseEntity<>(savedJourney, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/joinjourney/{journeyID}")
-    public Journey joinJourney(@PathVariable String journeyID, @RequestBody String userId) throws Exception {
+    @PutMapping(value = "/joinjourney/")
+    public Journey joinJourney(@RequestParam String journeyID, @RequestParam String userId) throws Exception {
         LOGGER.info("joinJourney initiated...");
         Journey journey = journeyService.getJourneyByID(journeyID);
         journey.addParticipant(userId);
