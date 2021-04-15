@@ -6,7 +6,6 @@ import java.util.List;
 
 public class UserDetailsVo {
 
-    private String userName;
     private String firstName;
     private String lastName;
     private String email;
@@ -18,18 +17,13 @@ public class UserDetailsVo {
     public UserDetailsVo(){
     }
 
-    public UserDetailsVo(String userName, String firstName, String lastName, String email, String mobileNumber, String iban, List<Journey> history) {
-        this.userName = userName;
+    public UserDetailsVo(String email, String firstName, String lastName, String mobileNumber, String iban, List<Journey> history) {
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.mobileNumber = mobileNumber;
         this.iban = iban;
         this.history = history;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public void setFirstName(String firstName) {
@@ -54,10 +48,6 @@ public class UserDetailsVo {
 
     public void setHistory(List<Journey> history) {
         this.history = history;
-    }
-
-    public String getUserName() {
-        return userName;
     }
 
     public String getFirstName() {
@@ -87,10 +77,9 @@ public class UserDetailsVo {
     @Override
     public String toString() {
         return "userDetailsVo{" +
-                "userName='" + userName + '\'' +
+                "email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
                 ", mobileNumber='" + mobileNumber + '\'' +
                 ", iban='" + iban + '\'' +
                 ", history=" + history +

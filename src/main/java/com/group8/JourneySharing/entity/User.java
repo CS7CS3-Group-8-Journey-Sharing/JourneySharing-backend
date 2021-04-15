@@ -13,7 +13,6 @@ public class User {
 
     @Id
     private String userId;
-    private String userName;
     private String password;
     private String firstName;
     private String lastName;
@@ -21,15 +20,13 @@ public class User {
     private String mobileNumber;
     private String iban;
     private List<Journey> history;
-    //private Binary image;
 
     public User() {
     }
 
-    public User(String userId, String userName, String password,
+    public User(String userId, String password,
                 String firstName, String lastName, String email, String mobileNumber, String iban, List<Journey> history) {
         this.userId = userId;
-        this.userName = userName;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,14 +42,6 @@ public class User {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getPassword() {
@@ -115,11 +104,10 @@ public class User {
     public String toString() {
         return "User{" +
                 "userId='" + userId + '\'' +
-                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
                 ", mobileNumber='" + mobileNumber + '\'' +
                 ", iban='" + iban + '\'' +
                 ", history=" + history +

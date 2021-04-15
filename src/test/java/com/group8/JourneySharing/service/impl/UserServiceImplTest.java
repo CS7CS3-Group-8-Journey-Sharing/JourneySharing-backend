@@ -37,9 +37,9 @@ public class UserServiceImplTest {
 		
 		userServiceImpl = new UserServiceImpl();
 		userServiceImpl.setUserRepository(userRepository);
-		newUser = new NewUserVo("userName","password","firstName","lastName","email");
-		user = new User("Unique char","userName","password","firstName","lastName","email","mobile number","iban", null);
-        userDetails = new UserDetailsVo("userName","firstName","lastName","email","mobileNumber","iban", null);
+		newUser = new NewUserVo("email", "password","firstName","lastName");
+		user = new User("email", "Unique char","password","firstName","lastName","mobile number","iban", null);
+        userDetails = new UserDetailsVo("email", "firstName","lastName", "mobileNumber","iban", null);
 
 	}
 
@@ -51,19 +51,10 @@ public class UserServiceImplTest {
 		userServiceImpl.addUser(newUser);
 	}
 
-	@Test (expected = BadRequestException.class)
-	public void testUserWithDuplicateUsername()
-	{
-		given( userRepository.findByEmail(ArgumentMatchers.anyString())).willReturn( null );
-		given( userRepository.findByUserName( ArgumentMatchers.anyString())).willReturn( new User());
-		userServiceImpl.addUser(newUser);
-	}
-
 	@Test
 	public void testCreateUser()
 	{
 		given( userRepository.findByEmail(ArgumentMatchers.anyString())).willReturn( null );
-		given( userRepository.findByUserName( ArgumentMatchers.anyString())).willReturn( null);
 		given(userRepository.save(ArgumentMatchers.any(User.class))).willReturn(user);
 		userServiceImpl.addUser(newUser);
 	}

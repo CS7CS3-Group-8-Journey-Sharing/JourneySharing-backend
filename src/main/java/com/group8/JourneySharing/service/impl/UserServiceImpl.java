@@ -11,10 +11,14 @@ import com.group8.JourneySharing.vo.UserDetailsVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -25,6 +29,9 @@ public class UserServiceImpl implements UserService {
     final static Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     
     @Autowired
     public void setUserRepository( UserRepository userRepository )
@@ -39,26 +46,21 @@ public class UserServiceImpl implements UserService {
     	    LOGGER.error("Email Already Exists");
     		throw new BadRequestException("Email Already Exists");
     	}
-    	if(userRepository.findByUserName(newUser.getUserName()) != null) {
-            LOGGER.error("UserName Already Exists");
-    		throw new BadRequestException("UserName Already Exists");
-    	}
         User user = modelMapper.map(newUser, User.class);
         user.setEmail(userEmail);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setHistory(new ArrayList<Journey>());
         User savedUser = userRepository.save(user);
-        //LOGGER.info("New User Saved {}",savedUser.getUserName());
-        //return savedUser.getUserName();
         LOGGER.info("User saved with id {}", savedUser.getUserId());
-        return savedUser.getUserId();
+        return savedUser.getEmail();
     }
 
     @Override
     public UserDetailsVo getUserByEmail(String email) {
         User savedUser = userRepository.findByEmail(email.toLowerCase());
         if(savedUser == null){
-            LOGGER.error("Invalid Email Id");
-            throw new BadRequestException("Invalid EmailID");
+            LOGGER.error("Email "+email+ " not found.");
+            throw new BadRequestException("Email "+email+ " not found.");
         }
 
         UserDetailsVo user = modelMapper.map(savedUser, UserDetailsVo.class);
