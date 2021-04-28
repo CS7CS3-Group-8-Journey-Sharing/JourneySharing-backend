@@ -4,6 +4,7 @@ import com.group8.JourneySharing.entity.Location;
 import com.group8.JourneySharing.entity.ModeOfTransport;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.ArrayList;
@@ -11,9 +12,11 @@ import java.util.ArrayList;
 public class NewJourneyVo {
 
 
-    @NotNull(message = "Journey name is a required parameter")
+    @NotBlank(message = "Journey name is a required parameter and cannot be an empty string")
     private String name;
     private boolean recurring;
+    @NotNull(message = "Recurring days is a required parameter")
+    private ArrayList<Boolean> recurringDays;
     @NotNull(message = "Owner ID is a required parameter")
     private String ownerId;
     @NotNull(message = "Start location is a required parameter")
@@ -30,7 +33,6 @@ public class NewJourneyVo {
     private Date startTime;
 
     //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @NotNull(message = "EndTime is a required parameter")
     private Date endTime;
     @NotNull(message = " Mode of transport is a required parameter")
     private ModeOfTransport modeOfTransport;
@@ -40,9 +42,10 @@ public class NewJourneyVo {
         super();
     }
 
-    public NewJourneyVo(String name, boolean recurring, String ownerId, Location startLocation, Location endLocation, int maxParticipants, ArrayList<String> participantIds, Date startTime, Date endTime, ModeOfTransport modeOfTransport) {
+    public NewJourneyVo(String name, boolean recurring, ArrayList<Boolean> recurringDays, String ownerId, Location startLocation, Location endLocation, int maxParticipants, ArrayList<String> participantIds, Date startTime, Date endTime, ModeOfTransport modeOfTransport) {
         this.name = name;
         this.recurring = recurring;
+        this.recurringDays = recurringDays;
         this.ownerId = ownerId;
         this.startLocation = startLocation;
         this.endLocation = endLocation;
@@ -64,6 +67,10 @@ public class NewJourneyVo {
     public void setRecurring(boolean recurring) {
         this.recurring = recurring;
     }
+
+    public ArrayList<Boolean> getRecurringDays() { return recurringDays; }
+
+    public void setRecurringDays(ArrayList<Boolean> recurringDays) { this.recurringDays = recurringDays; }
 
     public String getOwnerId() {
         return ownerId;
@@ -101,7 +108,7 @@ public class NewJourneyVo {
         return participantIds;
     }
 
-    public void setParticipantsIds(ArrayList<String> participantIds) {
+    public void setParticipantIds(ArrayList<String> participantIds) {
         this.participantIds = participantIds;
     }
 
