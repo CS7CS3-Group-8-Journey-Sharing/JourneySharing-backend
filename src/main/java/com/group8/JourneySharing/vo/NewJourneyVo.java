@@ -33,7 +33,6 @@ public class NewJourneyVo {
     private Date startTime;
 
     //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @NotNull(message = "EndTime is a required parameter")
     private Date endTime;
     @NotNull(message = " Mode of transport is a required parameter")
     private ModeOfTransport modeOfTransport;
