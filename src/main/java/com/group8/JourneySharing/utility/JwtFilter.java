@@ -1,5 +1,6 @@
 package com.group8.JourneySharing.utility;
 
+import com.group8.JourneySharing.controller.UserController;
 import com.group8.JourneySharing.service.AuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +27,12 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private AuthService authService;
 
+    final static Logger LOGGER = LoggerFactory.getLogger(JwtFilter.class);
+
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+        LOGGER.info("Authorization started: "+httpServletRequest.getHeader("Authorization"));
+
         String authorization = httpServletRequest.getHeader("Authorization");
         String token = null;
         String userName = null;
@@ -35,6 +40,8 @@ public class JwtFilter extends OncePerRequestFilter {
         if(null != authorization && authorization.startsWith("Bearer ")) {
             token = authorization.substring(7);
             userName = jwtUtility.getUsernameFromToken(token);
+        } else {
+            LOGGER.error("No Authorization Header");
         }
 
         if(null != userName && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -51,6 +58,9 @@ public class JwtFilter extends OncePerRequestFilter {
                 );
 
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                LOGGER.info(userName+ " authorized.");
+            } else {
+                LOGGER.error("Jwt Token does not match with email: Token Email - "+userName);
             }
 
         }
