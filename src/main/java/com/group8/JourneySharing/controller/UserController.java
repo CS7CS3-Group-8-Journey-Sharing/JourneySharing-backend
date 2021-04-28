@@ -23,12 +23,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // dont do {email}
     @GetMapping("/details")
     public ResponseEntity<UserDetailsVo> getUserByEmail(@RequestParam String email) throws Exception {
         LOGGER.info("Get User initiated: " + email);
         UserDetailsVo user = userService.getUserByEmail(email);
-        LOGGER.info("AddUser completed: " + email);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        LOGGER.info("Get User completed: " + user.toString());
+        return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
     }
 }
