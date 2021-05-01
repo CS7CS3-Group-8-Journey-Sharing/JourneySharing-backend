@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/journey")
@@ -42,5 +43,13 @@ public class JourneyController {
         LOGGER.info("Added user with id {} to participants of journey with id {}", userId, journey.getJourneyId());
         LOGGER.info("joinJourney completed...");
         return journey;
+    }
+
+    @GetMapping(value = "/getjourneys")
+    public ResponseEntity<List<Journey>> getJourneysWithinRadius(@RequestParam double lat, @RequestParam double lng, @RequestParam int radius) throws Exception {
+        LOGGER.info("get journeys initiated within: " + String.valueOf(radius) + " radius." );
+        List<Journey> journeyList = journeyService.getJourneysWithinRadius(lat, lng, radius);
+        LOGGER.info("get journeys completed.");
+        return new ResponseEntity<>(journeyList, HttpStatus.ACCEPTED);
     }
 }
