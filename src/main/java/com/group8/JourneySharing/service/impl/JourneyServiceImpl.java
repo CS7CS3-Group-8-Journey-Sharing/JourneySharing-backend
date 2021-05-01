@@ -1,5 +1,7 @@
 package com.group8.JourneySharing.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.group8.JourneySharing.entity.Journey;
@@ -46,8 +48,8 @@ public class JourneyServiceImpl implements JourneyService {
     }
 
     @Override
-    public Journey getJourneyByID(String journeyID) {
-        Optional<Journey> journeyOptional = journeyRepository.findById(journeyID.toLowerCase());
+    public Journey getJourneyByID(String journeyId) {
+        Optional<Journey> journeyOptional = journeyRepository.findById(journeyId.toLowerCase());
         if (!journeyOptional.isPresent()) {
             LOGGER.error("Invalid journeyID");
             throw new BadRequestException("Invalid journeyID");
@@ -55,5 +57,36 @@ public class JourneyServiceImpl implements JourneyService {
         Journey journey = journeyOptional.get();
         LOGGER.info("Journey Fetched Successfully {}", journey);
         return journey;
+    }
+
+    @Override
+    public Journey deleteRecurring(String journeyId) {
+        Optional<Journey> journeyOptional = journeyRepository.findById(journeyId.toLowerCase());
+        if (!journeyOptional.isPresent()) {
+            LOGGER.error("Invalid journeyID");
+            throw new BadRequestException("Invalid journeyID");
+        }
+        Journey journey = journeyOptional.get();
+        journey.setRecurring(false);
+        journey.setCompleted(true);
+        journey = journeyRepository.save(journey);
+        return journey;
+    }
+
+    @Override
+    public List<Journey> getJourneys(String userEmail) {
+        List<Journey> journeys = journeyRepository.findByOwnerEmailAndRecurring(userEmail,true);
+        List<Journey> notCompletedJourneys = journeyRepository.findByOwnerEmailAndRecurringAndCompleted(userEmail,false,false);
+        if(journeys == null)
+        {
+            journeys = new ArrayList<Journey>();
+        }
+        journeys.addAll(notCompletedJourneys);
+        return journeys;
+    }
+
+    @Override
+    public List<Journey> getHistory(List<String> journeys) {
+        return (List<Journey>) journeyRepository.findAllById(journeys);
     }
 }

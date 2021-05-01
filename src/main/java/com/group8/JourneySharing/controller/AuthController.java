@@ -1,9 +1,8 @@
 package com.group8.JourneySharing.controller;
 
-import com.group8.JourneySharing.entity.ErrorResponse;
+
 import com.group8.JourneySharing.entity.jwt.JwtRequest;
 import com.group8.JourneySharing.entity.jwt.JwtResponse;
-import com.group8.JourneySharing.exception.BadRequestException;
 import com.group8.JourneySharing.service.UserService;
 import com.group8.JourneySharing.service.AuthService;
 import com.group8.JourneySharing.utility.JwtUtility;
@@ -17,19 +16,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @RestController

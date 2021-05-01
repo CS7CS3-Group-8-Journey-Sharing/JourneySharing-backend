@@ -4,6 +4,7 @@ package com.group8.JourneySharing.service.impl;
 import com.group8.JourneySharing.entity.Journey;
 import com.group8.JourneySharing.entity.User;
 import com.group8.JourneySharing.exception.BadRequestException;
+import com.group8.JourneySharing.repository.JourneyRepository;
 import com.group8.JourneySharing.repository.UserRepository;
 import com.group8.JourneySharing.service.UserService;
 import com.group8.JourneySharing.vo.NewUserVo;
@@ -11,14 +12,11 @@ import com.group8.JourneySharing.vo.UserDetailsVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -39,6 +37,14 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
+    @Autowired
+    private JourneyRepository journeyRepository;
+
+//    @Autowired
+//    public void setJourneyRepository(JourneyRepository journeyRepository) {
+//        this.journeyRepository = journeyRepository;
+//    }
+
     @Override
     public String addUser(NewUserVo newUser) {
     	String userEmail = newUser.getEmail().toLowerCase();
@@ -49,7 +55,7 @@ public class UserServiceImpl implements UserService {
         User user = modelMapper.map(newUser, User.class);
         user.setEmail(userEmail);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setHistory(new ArrayList<Journey>());
+        user.setHistory(new ArrayList<String>());
         User savedUser = userRepository.save(user);
         LOGGER.info("User saved with id {}", savedUser.getUserId());
         return savedUser.getEmail();
@@ -78,5 +84,23 @@ public class UserServiceImpl implements UserService {
         User user = userOptional.get();
         LOGGER.info("User Fetched Successfully {}", user);
         return user;
+    }
+
+    @Override
+    public User addToHistory(String userEmail, String journeyId) {
+        Optional<Journey> journeyOptional = journeyRepository.findById(journeyId.toLowerCase());
+        if (!journeyOptional.isPresent()) {
+            LOGGER.error("Invalid journeyID");
+            throw new BadRequestException("Invalid journeyID");
+        }
+        Journey journey = journeyOptional.get();
+        User user = userRepository.findByEmail(userEmail.toLowerCase());
+        if(user == null) {
+            LOGGER.error("Invalid userEmail");
+            throw new BadRequestException("Invalid userEmail");
+        }
+        user.addHistory(journey.getJourneyId());
+        User savedUser = userRepository.save(user);
+        return savedUser;
     }
 }

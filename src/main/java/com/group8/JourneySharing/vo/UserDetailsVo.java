@@ -11,13 +11,13 @@ public class UserDetailsVo {
     private String email;
     private String mobileNumber;
     private String iban;
-    private List<Journey> history;
+    private List<String> history;
 
 
     public UserDetailsVo(){
     }
 
-    public UserDetailsVo(String email, String firstName, String lastName, String mobileNumber, String iban, List<Journey> history) {
+    public UserDetailsVo(String email, String firstName, String lastName, String mobileNumber, String iban, List<String> history) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -46,7 +46,7 @@ public class UserDetailsVo {
         this.iban = iban;
     }
 
-    public void setHistory(List<Journey> history) {
+    public void setHistory(List<String> history) {
         this.history = history;
     }
 
@@ -70,7 +70,7 @@ public class UserDetailsVo {
         return iban;
     }
 
-    public List<Journey> getHistory() {
+    public List<String> getHistory() {
         return history;
     }
 

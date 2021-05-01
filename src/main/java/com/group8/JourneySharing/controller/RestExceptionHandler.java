@@ -61,7 +61,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         ErrorResponse response = new ErrorResponse();
         response.setErrorCode(HttpStatus.BAD_REQUEST.value());
-        response.setErrorMessage(Arrays.asList("Invalid JSON").toString());
+        response.setErrorMessage(Arrays.asList(ex.getMessage()).toString());
         return new ResponseEntity<>(response, header, HttpStatus.BAD_REQUEST);
     }
 

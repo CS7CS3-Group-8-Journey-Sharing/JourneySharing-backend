@@ -15,14 +15,13 @@ public class Journey {
     private String name;
     private boolean recurring;
     private boolean completed;
-    private String ownerId;
-    private ArrayList<String> participantIds;
+    private String ownerEmail;
+    private ArrayList<String> participantEmails;
     private Location startLocation;
     private Location endLocation;
     private int maxParticipants;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date startTime;
-    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date endTime;
     private ModeOfTransport modeOfTransport;
     private ArrayList<Location> stops;
@@ -30,16 +29,14 @@ public class Journey {
     public Journey() {
     }
 
-    // Add timestap Timestamp startTime,
-    //Timestamp endTime,
-    public Journey(String journeyId, String name, boolean recurring, boolean completed, String ownerId, ArrayList<String> participantIds,
+    public Journey(String journeyId, String name, boolean recurring, boolean completed, String ownerEmail, ArrayList<String> participantEmails,
                    Location startLocation, Location endLocation, int maxParticipants, Date startTime, Date endTime, ModeOfTransport modeOfTransport, ArrayList<Location> stops) {
         this.journeyId = journeyId;
         this.name = name;
         this.recurring = recurring;
         this.completed = completed;
-        this.ownerId = ownerId;
-        this.participantIds = participantIds;
+        this.ownerEmail = ownerEmail;
+        this.participantEmails = participantEmails;
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.maxParticipants = maxParticipants;
@@ -77,28 +74,20 @@ public class Journey {
         this.completed = completed;
     }
 
-    public String getOwnerId() {
-        return ownerId;
+    public String getOwnerEmail() {
+        return ownerEmail;
     }
 
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
+    public void setOwnerEmail(String ownerEmail) {
+        this.ownerEmail = ownerEmail;
     }
 
-    public ArrayList<String> getParticipantIds() {
-        return participantIds;
+    public ArrayList<String> getParticipantEmails() {
+        return participantEmails;
     }
 
-    public void setParticipantIds(ArrayList<String> participantIds) {
-        this.participantIds = participantIds;
-    }
-
-    public void addParticipant(String participantId) {
-        participantIds.add(participantId);
-    }
-
-    public void removeParticipant(String participantId) {
-        participantIds.remove(participantId);
+    public void setParticipantEmails(ArrayList<String> participantEmails) {
+        this.participantEmails = participantEmails;
     }
 
     public Location getStartLocation() {
@@ -157,6 +146,15 @@ public class Journey {
         this.stops = stops;
     }
 
+    public void addParticipant(String participantEmail) {
+        participantEmails.add(participantEmail);
+    }
+
+    public void removeParticipant(String participantEmail) {
+        participantEmails.remove(participantEmail);
+    }
+
+
     @Override
     public String toString() {
         return "Journey{" +
@@ -164,8 +162,8 @@ public class Journey {
                 ", name='" + name +
                 ", recurring=" + recurring +
                 ", completed=" + completed +
-                ", ownerId=" + ownerId +
-                ", participantIds=" + participantIds +
+                ", ownerEmail=" + ownerEmail +
+                ", participantEmails=" + participantEmails +
                 ", startLocation=" + startLocation +
                 ", endLocation=" + endLocation +
                 ", maxParticipants=" + maxParticipants +

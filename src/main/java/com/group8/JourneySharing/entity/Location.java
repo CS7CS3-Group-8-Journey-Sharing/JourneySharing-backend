@@ -1,7 +1,5 @@
 package com.group8.JourneySharing.entity;
 
-import org.springframework.data.annotation.Id;
-
 public class Location {
     public String name;
     public double lat;
