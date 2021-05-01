@@ -17,23 +17,19 @@ public class NewJourneyVo {
     private boolean recurring;
     @NotNull(message = "Recurring days is a required parameter")
     private ArrayList<Boolean> recurringDays;
-    @NotNull(message = "Owner ID is a required parameter")
-    private String ownerId;
+    @NotNull(message = "Owner Email is a required parameter")
+    private String ownerEmail;
     @NotNull(message = "Start location is a required parameter")
     private Location startLocation;
     @NotNull(message = "End Location is a required parameter")
     private Location endLocation;
 
     private int maxParticipants;
-    @NotNull(message = "Participants is a required parameter")
-    private ArrayList<String> participantIds;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @NotNull(message = "StartTime is a required parameter")
     private Date startTime;
 
-    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private Date endTime;
     @NotNull(message = " Mode of transport is a required parameter")
     private ModeOfTransport modeOfTransport;
 
@@ -42,17 +38,15 @@ public class NewJourneyVo {
         super();
     }
 
-    public NewJourneyVo(String name, boolean recurring, ArrayList<Boolean> recurringDays, String ownerId, Location startLocation, Location endLocation, int maxParticipants, ArrayList<String> participantIds, Date startTime, Date endTime, ModeOfTransport modeOfTransport) {
+    public NewJourneyVo(String name, boolean recurring, ArrayList<Boolean> recurringDays, String ownerEmail, Location startLocation, Location endLocation, int maxParticipants, ArrayList<String> participantIds, Date startTime, Date endTime, ModeOfTransport modeOfTransport) {
         this.name = name;
         this.recurring = recurring;
         this.recurringDays = recurringDays;
-        this.ownerId = ownerId;
+        this.ownerEmail = ownerEmail;
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.maxParticipants = maxParticipants;
-        this.participantIds = participantIds;
         this.startTime = startTime;
-        this.endTime = endTime;
         this.modeOfTransport = modeOfTransport;
     }
 
@@ -72,12 +66,12 @@ public class NewJourneyVo {
 
     public void setRecurringDays(ArrayList<Boolean> recurringDays) { this.recurringDays = recurringDays; }
 
-    public String getOwnerId() {
-        return ownerId;
+    public String getOwnerEmail() {
+        return ownerEmail;
     }
 
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
+    public void setOwnerEmail(String ownerEmail) {
+        this.ownerEmail = ownerEmail;
     }
 
     public Location getStartLocation() {
@@ -104,13 +98,6 @@ public class NewJourneyVo {
         this.maxParticipants = maxParticipants;
     }
 
-    public ArrayList<String> getParticipantIds() {
-        return participantIds;
-    }
-
-    public void setParticipantIds(ArrayList<String> participantIds) {
-        this.participantIds = participantIds;
-    }
 
     public Date getStartTime() {
         return startTime;
@@ -120,13 +107,6 @@ public class NewJourneyVo {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
 
     public ModeOfTransport getModeOfTransport() {
         return modeOfTransport;
@@ -141,13 +121,11 @@ public class NewJourneyVo {
         return "NewJourneyVo{" +
                 "name=" + name +
                 ", recurring=" + recurring +
-                ", ownerId=" + ownerId +
+                ", ownerEmail=" + ownerEmail +
                 ", startLocation=" + startLocation +
                 ", endLocation=" + endLocation +
                 ", maxParticipants=" + maxParticipants +
-                ", participantIds=" + participantIds +
                 ", startTime=" + startTime +
-                ", endTime=" + endTime +
                 ", modeOfTransport=" + modeOfTransport +
                 '}';
     }

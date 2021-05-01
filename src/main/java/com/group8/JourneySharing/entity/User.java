@@ -19,13 +19,13 @@ public class User {
     private String email;
     private String mobileNumber;
     private String iban;
-    private List<Journey> history;
+    private List<String> history;
 
     public User() {
     }
 
     public User(String userId, String password,
-                String firstName, String lastName, String email, String mobileNumber, String iban, List<Journey> history) {
+                String firstName, String lastName, String email, String mobileNumber, String iban, List<String> history) {
         this.userId = userId;
         this.password = password;
         this.firstName = firstName;
@@ -92,12 +92,20 @@ public class User {
         this.iban = iban;
     }
 
-    public List<Journey> getHistory() {
+    public List<String> getHistory() {
         return history;
     }
 
-    public void setHistory(List<Journey> history) {
+    public void setHistory(List<String> history) {
         this.history = history;
+    }
+
+    public void addHistory(String journeyId) {
+        history.add(journeyId);
+    }
+
+    public void removeHistory(String journeyId) {
+        history.remove(journeyId);
     }
 
     @Override

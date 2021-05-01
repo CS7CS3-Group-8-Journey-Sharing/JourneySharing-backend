@@ -1,6 +1,7 @@
 package com.group8.JourneySharing.controller;
 
 
+import com.group8.JourneySharing.entity.Journey;
 import com.group8.JourneySharing.entity.User;
 import com.group8.JourneySharing.service.UserService;
 import com.group8.JourneySharing.vo.NewUserVo;
@@ -28,6 +29,14 @@ public class UserController {
         LOGGER.info("Get User initiated: " + email);
         UserDetailsVo user = userService.getUserByEmail(email);
         LOGGER.info("Get User completed: " + user.toString());
-        return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/addtohistory")
+    public ResponseEntity<User> addToHistory(@RequestParam String userEmail, @RequestParam String journeyId) {
+        LOGGER.info("addToHistory initiated: " + journeyId );
+        User savedUser = userService.addToHistory(userEmail,journeyId);
+        LOGGER.info("addToHistory completed: " + journeyId );
+        return new ResponseEntity<>(savedUser, HttpStatus.OK);
     }
 }

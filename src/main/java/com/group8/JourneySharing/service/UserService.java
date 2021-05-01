@@ -8,7 +8,10 @@ import com.group8.JourneySharing.vo.UserDetailsVo;
 public interface UserService {
 
     public String addUser(NewUserVo newUser);
+
     public UserDetailsVo getUserByEmail(String email);
+
     public User getUserByID(String id);
 
+    User addToHistory(String userEmail, String journeyId);
 }

@@ -12,5 +12,11 @@ public interface JourneyService {
 
     Journey getJourneyByID(String journeyID);
 
+    Journey deleteRecurring(String journeyId);
+
+    List<Journey> getJourneys(String userEmail);
+
+    List<Journey> getHistory(List<String> journeys);
+
     List<Journey> getJourneysWithinRadius(double lat, double lng, int radius);
 }
