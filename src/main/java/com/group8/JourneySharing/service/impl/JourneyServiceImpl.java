@@ -46,6 +46,13 @@ public class JourneyServiceImpl implements JourneyService {
     }
 
     @Override
+    public Journey saveJourney(Journey newJourney) {
+        Journey savedJourney = journeyRepository.save(newJourney);
+        LOGGER.info("Journey with id {} saved", savedJourney.getJourneyId());
+        return savedJourney;
+    }
+
+    @Override
     public Journey getJourneyByID(String journeyID) {
         Optional<Journey> journeyOptional = journeyRepository.findById(journeyID.toLowerCase());
         if (!journeyOptional.isPresent()) {

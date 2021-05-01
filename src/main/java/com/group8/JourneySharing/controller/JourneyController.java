@@ -35,12 +35,13 @@ public class JourneyController {
     }
 
     @PutMapping(value = "/joinjourney/")
-    public Journey joinJourney(@RequestParam String journeyID, @RequestParam String userId) throws Exception {
+    public ResponseEntity<Journey> joinJourney(@RequestParam String journeyID, @RequestParam String userId) throws Exception {
         LOGGER.info("joinJourney initiated...");
         Journey journey = journeyService.getJourneyByID(journeyID);
         journey.addParticipant(userId);
+        Journey savedJourney = journeyService.saveJourney(journey);
         LOGGER.info("Added user with id {} to participants of journey with id {}", userId, journey.getJourneyId());
         LOGGER.info("joinJourney completed...");
-        return journey;
+        return new ResponseEntity<>(savedJourney, HttpStatus.ACCEPTED);
     }
 }
