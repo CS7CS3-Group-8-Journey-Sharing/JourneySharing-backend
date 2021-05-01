@@ -18,4 +18,5 @@ public interface JourneyService {
 
     List<Journey> getHistory(List<String> journeys);
 
+    List<Journey> getJourneysWithinRadius(double lat, double lng, int radius);
 }

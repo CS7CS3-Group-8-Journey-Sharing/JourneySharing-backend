@@ -1,10 +1,12 @@
 package com.group8.JourneySharing.service.impl;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
 import com.group8.JourneySharing.entity.Journey;
+import com.group8.JourneySharing.entity.Location;
 import com.group8.JourneySharing.repository.JourneyRepository;
 import com.group8.JourneySharing.service.JourneyService;
 import com.group8.JourneySharing.service.UserService;
@@ -88,5 +90,25 @@ public class JourneyServiceImpl implements JourneyService {
     @Override
     public List<Journey> getHistory(List<String> journeys) {
         return (List<Journey>) journeyRepository.findAllById(journeys);
+    }
+
+    @Override
+    public List<Journey> getJourneysWithinRadius(double userLat, double userLng, int radius) {
+        List<Journey> allJourneys = journeyRepository.findAll();
+        List<Journey> journeysWithinRadius = new LinkedList<Journey>();
+
+        for(Journey journey: allJourneys){
+            Location journeyStartLocation = journey.getStartLocation();
+            double latJourney = journeyStartLocation.getLat();
+            double lngJourney = journeyStartLocation.getLng();
+
+            double dist = journeyStartLocation.meterDistanceBetweenPoints(userLat, userLng, latJourney, lngJourney);
+
+            if (dist<radius){
+                journeysWithinRadius.add(journey);
+            }
+        }
+
+        return journeysWithinRadius;
     }
 }

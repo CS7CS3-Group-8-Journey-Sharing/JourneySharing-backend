@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -79,6 +80,11 @@ public class JourneyController {
         return new ResponseEntity<>(journey, HttpStatus.OK);
     }
 
-
-
+    @GetMapping(value = "/getjourneysradius")
+    public ResponseEntity<List<Journey>> getJourneysWithinRadius(@RequestParam double lat, @RequestParam double lng, @RequestParam int radius) throws Exception {
+        LOGGER.info("get journeys initiated within: " + String.valueOf(radius) + " radius." );
+        List<Journey> journeyList = journeyService.getJourneysWithinRadius(lat, lng, radius);
+        LOGGER.info("get journeys completed.");
+        return new ResponseEntity<>(journeyList, HttpStatus.ACCEPTED);
+    }
 }
