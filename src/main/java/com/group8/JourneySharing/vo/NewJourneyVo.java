@@ -23,8 +23,8 @@ public class NewJourneyVo {
     private Location startLocation;
     @NotNull(message = "End Location is a required parameter")
     private Location endLocation;
-
-    private int maxParticipants;
+    @NotNull(message = "Max Participants is a required parameter")
+    private Integer maxParticipants;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @NotNull(message = "StartTime is a required parameter")
@@ -33,12 +33,16 @@ public class NewJourneyVo {
     @NotNull(message = " Mode of transport is a required parameter")
     private ModeOfTransport modeOfTransport;
 
+    private boolean womanOnly = false;
+
 
     public NewJourneyVo() {
         super();
     }
 
-    public NewJourneyVo(String name, boolean recurring, ArrayList<Boolean> recurringDays, String ownerEmail, Location startLocation, Location endLocation, int maxParticipants, ArrayList<String> participantIds, Date startTime, Date endTime, ModeOfTransport modeOfTransport) {
+    public NewJourneyVo(String name, boolean recurring, ArrayList<Boolean> recurringDays, String ownerEmail,
+                        Location startLocation, Location endLocation, int maxParticipants, ArrayList<String> participantIds,
+                        Date startTime, Date endTime, ModeOfTransport modeOfTransport, boolean womanOnly) {
         this.name = name;
         this.recurring = recurring;
         this.recurringDays = recurringDays;
@@ -48,6 +52,7 @@ public class NewJourneyVo {
         this.maxParticipants = maxParticipants;
         this.startTime = startTime;
         this.modeOfTransport = modeOfTransport;
+        this.womanOnly = womanOnly;
     }
 
     public String getName() { return name; }
@@ -116,6 +121,18 @@ public class NewJourneyVo {
         this.modeOfTransport = modeOfTransport;
     }
 
+    public void setMaxParticipants(Integer maxParticipants) {
+        this.maxParticipants = maxParticipants;
+    }
+
+    public boolean isWomanOnly() {
+        return womanOnly;
+    }
+
+    public void setWomanOnly(boolean womanOnly) {
+        this.womanOnly = womanOnly;
+    }
+
     @Override
     public String toString() {
         return "NewJourneyVo{" +
@@ -127,6 +144,7 @@ public class NewJourneyVo {
                 ", maxParticipants=" + maxParticipants +
                 ", startTime=" + startTime +
                 ", modeOfTransport=" + modeOfTransport +
+                ", womanOnly=" + womanOnly +
                 '}';
     }
 }

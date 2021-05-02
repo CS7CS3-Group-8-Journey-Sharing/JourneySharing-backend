@@ -2,12 +2,14 @@ package com.group8.JourneySharing.service.impl;
 
 
 import com.group8.JourneySharing.entity.Journey;
+import com.group8.JourneySharing.entity.Rating;
 import com.group8.JourneySharing.entity.User;
 import com.group8.JourneySharing.exception.BadRequestException;
 import com.group8.JourneySharing.repository.JourneyRepository;
 import com.group8.JourneySharing.repository.UserRepository;
 import com.group8.JourneySharing.service.UserService;
 import com.group8.JourneySharing.vo.NewUserVo;
+import com.group8.JourneySharing.vo.RatingVo;
 import com.group8.JourneySharing.vo.UserDetailsVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,13 +40,12 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
-    @Autowired
     private JourneyRepository journeyRepository;
 
-//    @Autowired
-//    public void setJourneyRepository(JourneyRepository journeyRepository) {
-//        this.journeyRepository = journeyRepository;
-//    }
+    @Autowired
+    public void setJourneyRepository(JourneyRepository journeyRepository) {
+        this.journeyRepository = journeyRepository;
+    }
 
     @Override
     public String addUser(NewUserVo newUser) {
@@ -102,5 +104,34 @@ public class UserServiceImpl implements UserService {
         user.addHistory(journey.getJourneyId());
         User savedUser = userRepository.save(user);
         return savedUser;
+    }
+
+    @Override
+    public void addRating(List<RatingVo> ratings) {
+        for (RatingVo rating : ratings)
+        {
+            User user = userRepository.findByEmail(rating.getUserEmail().toLowerCase());
+            if(user == null)
+                continue;
+            user.getRating().addRating(rating.getRating());
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public double getRating(String userEmail) {
+        User user = userRepository.findByEmail(userEmail);
+        if(user == null)
+        {
+            throw new BadRequestException("User does not exist");
+        }
+        Rating userRating = user.getRating();
+        double rating =  userRating.getTotalRating()/userRating.getNumOfRating();
+        return  rating;
+    }
+
+    @Override
+    public void deleteUser(String userEmail) {
+        userRepository.deleteByEmail(userEmail);
     }
 }

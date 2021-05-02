@@ -1,8 +1,6 @@
 package com.group8.JourneySharing.entity;
 
-import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -20,12 +18,16 @@ public class User {
     private String mobileNumber;
     private String iban;
     private List<String> history;
+    private int age;
+    private Gender gender;
+    private Rating rating = new Rating();
 
     public User() {
     }
 
     public User(String userId, String password,
-                String firstName, String lastName, String email, String mobileNumber, String iban, List<String> history) {
+                String firstName, String lastName, String email, String mobileNumber,
+                String iban, List<String> history, Rating rating) {
         this.userId = userId;
         this.password = password;
         this.firstName = firstName;
@@ -34,6 +36,23 @@ public class User {
         this.mobileNumber = mobileNumber;
         this.iban = iban;
         this.history = history;
+        this.rating = rating;
+    }
+
+    public User(String userId, String password, String firstName, String lastName, String email,
+                String mobileNumber, String iban, List<String> history, int age,
+                Gender gender, Rating rating) {
+        this.userId = userId;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.mobileNumber = mobileNumber;
+        this.iban = iban;
+        this.history = history;
+        this.age = age;
+        this.gender = gender;
+        this.rating = rating;
     }
 
     public String getUserId() {
@@ -108,17 +127,44 @@ public class User {
         history.remove(journeyId);
     }
 
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "userId='" + userId + '\'' +
-                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
                 ", mobileNumber='" + mobileNumber + '\'' +
                 ", iban='" + iban + '\'' +
                 ", history=" + history +
+                ", rating=" + rating +
+                ", age=" + age +
+                ", gender=" + gender +
                 '}';
     }
 }

@@ -1,29 +1,19 @@
-package com.group8.JourneySharing.entity;
+package com.group8.JourneySharing.vo;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.group8.JourneySharing.entity.RequestStatus;
+import com.group8.JourneySharing.entity.ViewStatus;
 
-@Document(value = "request")
-public class Requests {
+public class RequestsVo {
 
-    @Id
     private String requestId;
-    private String requestedUserEmail;
+    private UserDetailsVo requestedUser;
     private String journeyId;
-    private RequestStatus requestStatus = RequestStatus.pending;
-    private ViewStatus viewStatus = ViewStatus.unseen;
+    private RequestStatus requestStatus;
+    private ViewStatus viewStatus;
 
-    public Requests() {
-    }
-
-    public Requests(String requestedUserEmail, String journeyId) {
-        this.requestedUserEmail = requestedUserEmail;
-        this.journeyId = journeyId;
-    }
-
-    public Requests(String requestId, String requestedUserEmail, String journeyId, RequestStatus requestStatus, ViewStatus viewStatus) {
+    public RequestsVo(String requestId, UserDetailsVo requestedUser, String journeyId, RequestStatus requestStatus, ViewStatus viewStatus) {
         this.requestId = requestId;
-        this.requestedUserEmail = requestedUserEmail;
+        this.requestedUser = requestedUser;
         this.journeyId = journeyId;
         this.requestStatus = requestStatus;
         this.viewStatus = viewStatus;
@@ -37,12 +27,12 @@ public class Requests {
         this.requestId = requestId;
     }
 
-    public String getRequestedUserEmail() {
-        return requestedUserEmail;
+    public UserDetailsVo getRequestedUser() {
+        return requestedUser;
     }
 
-    public void setRequestedUserEmail(String requestedUserEmail) {
-        this.requestedUserEmail = requestedUserEmail;
+    public void setRequestedUser(UserDetailsVo requestedUser) {
+        this.requestedUser = requestedUser;
     }
 
     public String getJourneyId() {
@@ -71,11 +61,11 @@ public class Requests {
 
     @Override
     public String toString() {
-        return "Requests{" +
+        return "RequestsVo{" +
                 "requestId='" + requestId + '\'' +
-                ", requestedUserEmail='" + requestedUserEmail + '\'' +
+                ", requestedUser=" + requestedUser +
                 ", journeydId='" + journeyId + '\'' +
-                ", requestStatus=" + requestStatus + '\'' +
+                ", requestStatus=" + requestStatus +
                 ", viewStatus=" + viewStatus +
                 '}';
     }

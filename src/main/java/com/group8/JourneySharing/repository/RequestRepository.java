@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface RequestRepository extends MongoRepository<Requests,String> {
 
+    void deleteByJourneyId(String journeyId);
 
-
+    List<Requests> findByRequestedUserEmail(String userEmail);
 }

@@ -7,7 +7,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Journey {
 
@@ -15,7 +14,7 @@ public class Journey {
     private String journeyId;
     private String name;
     private boolean recurring;
-    private boolean completed;
+    private boolean completed = false;
     private String ownerEmail;
     private ArrayList<String> participantEmails;
     private Location startLocation;
@@ -27,6 +26,8 @@ public class Journey {
     private ModeOfTransport modeOfTransport;
     private ArrayList<Location> stops;
     private ArrayList<String> requests;
+    private boolean active = false;
+    private boolean womanOnly = false;
 
     public Journey() {
     }
@@ -34,7 +35,8 @@ public class Journey {
 
 
     public Journey(String journeyId, String name, boolean recurring, boolean completed, String ownerEmail, ArrayList<String> participantEmails,
-                   Location startLocation, Location endLocation, int maxParticipants, Date startTime, Date endTime, ModeOfTransport modeOfTransport, ArrayList<Location> stops, ArrayList<String> requests) {
+                   Location startLocation, Location endLocation, int maxParticipants, Date startTime, Date endTime, ModeOfTransport modeOfTransport, ArrayList<Location> stops, ArrayList<String> requests,
+                   boolean active, boolean womanOnly) {
         this.journeyId = journeyId;
         this.name = name;
         this.recurring = recurring;
@@ -49,6 +51,8 @@ public class Journey {
         this.modeOfTransport = modeOfTransport;
         this.stops = stops;
         this.requests = requests;
+        this.active = active;
+        this.womanOnly = womanOnly;
     }
 
     public String getJourneyId() {
@@ -166,6 +170,21 @@ public class Journey {
         this.requests = requests;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isWomanOnly() {
+        return womanOnly;
+    }
+
+    public void setWomanOnly(boolean womanOnly) {
+        this.womanOnly = womanOnly;
+    }
 
     @Override
     public String toString() {
@@ -184,6 +203,8 @@ public class Journey {
                 ", modeOfTransport=" + modeOfTransport +
                 ", stops=" + stops +
                 ", requests=" + requests +
+                ", active=" + active +
+                ", womanOnly=" + womanOnly +
                 '}';
     }
 }

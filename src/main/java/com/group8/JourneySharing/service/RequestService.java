@@ -1,9 +1,8 @@
 package com.group8.JourneySharing.service;
 
 
-import com.group8.JourneySharing.entity.RequestStatus;
 import com.group8.JourneySharing.entity.Requests;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.group8.JourneySharing.vo.RequestsVo;
 
 import java.util.List;
 
@@ -12,8 +11,15 @@ public interface RequestService {
 
     String createRequest(String email, String journeyid);
 
-    RequestStatus getRequest(String id);
+    Requests getRequest(String id);
 
-    List<Requests> getRequestsByEmail(String userEmail);
+    List<RequestsVo> getRequestsByEmail(String userEmail);
 
+    void updateToSeen(List<String> requestIds);
+
+    void denyRequest(String requestId);
+
+    List<Requests> getRequestsYouMade(String userEmail);
+
+    void deleteRequest(String requestId);
 }

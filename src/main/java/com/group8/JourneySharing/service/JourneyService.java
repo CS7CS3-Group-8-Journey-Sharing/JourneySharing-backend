@@ -22,5 +22,13 @@ public interface JourneyService {
 
     Journey saveJourney(Journey journey);
 
+    void joinJourney (String requestId);
 
+    void deleteJourney(String journeyId);
+
+    void startJourney(String userEmail, String journeyId);
+
+    void endJourney(String userEmail,String journeyId);
+
+    List<Journey> getJourneysWithinRadiusWomenOnly(double lat, double lng, int radius);
 }

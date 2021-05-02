@@ -43,14 +43,13 @@ public class JourneyController {
         return new ResponseEntity<>(savedJourney, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/joinjourney/")
-    public Journey joinJourney(@RequestParam String journeyID, @RequestParam String userId) throws Exception {
-        LOGGER.info("joinJourney initiated...");
-        Journey journey = journeyService.getJourneyByID(journeyID);
-        journey.addParticipant(userId);
-        LOGGER.info("Added user with id {} to participants of journey with id {}", userId, journey.getJourneyId());
-        LOGGER.info("joinJourney completed...");
-        return journey;
+
+    @PutMapping(value = "/joinjourney")
+    public ResponseEntity<Void> joinJourney(@RequestParam String requestId) {
+        LOGGER.info("joinJourney initiated: " + requestId );
+        journeyService.joinJourney(requestId);
+        LOGGER.info("joinJourney completed: " + requestId );
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PostMapping(value = "/deleterecurring")
@@ -89,4 +88,38 @@ public class JourneyController {
         return new ResponseEntity<>(journeyList, HttpStatus.ACCEPTED);
     }
 
+    @PostMapping(value = "/deletejourney")
+    public ResponseEntity<Void> deleteJourney(@RequestParam String journeyId) {
+        LOGGER.info("deleteJourney initiated: " + journeyId );
+        journeyService.deleteJourney(journeyId);
+        LOGGER.info("deleteJourney completed: " + journeyId );
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping(value = "/startjourney")
+    public ResponseEntity<Journey> startJourney(@RequestParam String userEmail, @RequestParam String journeyId )
+    {
+        LOGGER.info("startJourney initiated: " + journeyId );
+        journeyService.startJourney(userEmail, journeyId);
+        LOGGER.info("startJourney completed: " + journeyId );
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping(value = "/endjourney")
+    public ResponseEntity<Journey> endJourney(@RequestParam String userEmail, @RequestParam String journeyId )
+    {
+        LOGGER.info("endJourney initiated: " + journeyId );
+        journeyService.endJourney(userEmail, journeyId);
+        LOGGER.info("endJourney completed: " + journeyId );
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping(value = "/getjourneyswoman")
+    public ResponseEntity<List<Journey>> getJourneysWithinRadiusForWomanOnly
+            (@RequestParam double lat, @RequestParam double lng, @RequestParam int radius){
+        LOGGER.info("getJourneysWithinRadiusForWomanOnly initiated within: " + String.valueOf(radius) + " radius." );
+        List<Journey> journeyList = journeyService.getJourneysWithinRadiusWomenOnly(lat, lng, radius);
+        LOGGER.info("getJourneysWithinRadiusForWomanOnly completed.");
+        return new ResponseEntity<>(journeyList, HttpStatus.ACCEPTED);
+    }
 }
