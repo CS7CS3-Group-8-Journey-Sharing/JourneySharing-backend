@@ -10,4 +10,5 @@ public interface JourneyRepository extends MongoRepository<Journey,String> {
     List<Journey> findByOwnerEmailAndRecurring (String userId,boolean recurring);
 
     List<Journey> findByOwnerEmailAndRecurringAndCompleted (String userId,boolean recurring, boolean completed);
+
 }

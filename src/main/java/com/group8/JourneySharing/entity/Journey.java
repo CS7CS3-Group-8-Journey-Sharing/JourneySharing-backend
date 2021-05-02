@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Journey {
 
@@ -25,12 +26,15 @@ public class Journey {
     private Date endTime;
     private ModeOfTransport modeOfTransport;
     private ArrayList<Location> stops;
+    private ArrayList<String> requests;
 
     public Journey() {
     }
 
+
+
     public Journey(String journeyId, String name, boolean recurring, boolean completed, String ownerEmail, ArrayList<String> participantEmails,
-                   Location startLocation, Location endLocation, int maxParticipants, Date startTime, Date endTime, ModeOfTransport modeOfTransport, ArrayList<Location> stops) {
+                   Location startLocation, Location endLocation, int maxParticipants, Date startTime, Date endTime, ModeOfTransport modeOfTransport, ArrayList<Location> stops, ArrayList<String> requests) {
         this.journeyId = journeyId;
         this.name = name;
         this.recurring = recurring;
@@ -44,6 +48,7 @@ public class Journey {
         this.endTime = endTime;
         this.modeOfTransport = modeOfTransport;
         this.stops = stops;
+        this.requests = requests;
     }
 
     public String getJourneyId() {
@@ -153,6 +158,13 @@ public class Journey {
     public void removeParticipant(String participantEmail) {
         participantEmails.remove(participantEmail);
     }
+    public ArrayList<String> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(ArrayList<String> requests) {
+        this.requests = requests;
+    }
 
 
     @Override
@@ -171,6 +183,7 @@ public class Journey {
                 ", endTime=" + endTime +
                 ", modeOfTransport=" + modeOfTransport +
                 ", stops=" + stops +
+                ", requests=" + requests +
                 '}';
     }
 }

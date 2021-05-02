@@ -2,6 +2,7 @@ package com.group8.JourneySharing.controller;
 
 
 import com.group8.JourneySharing.entity.Journey;
+import com.group8.JourneySharing.entity.Requests;
 import com.group8.JourneySharing.service.JourneyService;
 import com.group8.JourneySharing.service.UserService;
 import com.group8.JourneySharing.vo.NewJourneyVo;
@@ -87,4 +88,5 @@ public class JourneyController {
         LOGGER.info("get journeys completed.");
         return new ResponseEntity<>(journeyList, HttpStatus.ACCEPTED);
     }
+
 }

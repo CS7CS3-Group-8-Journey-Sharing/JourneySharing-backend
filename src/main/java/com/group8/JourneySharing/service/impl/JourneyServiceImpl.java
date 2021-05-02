@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.group8.JourneySharing.entity.Journey;
 import com.group8.JourneySharing.entity.Location;
+import com.group8.JourneySharing.entity.RequestStatus;
+import com.group8.JourneySharing.entity.Requests;
 import com.group8.JourneySharing.repository.JourneyRepository;
 import com.group8.JourneySharing.service.JourneyService;
+import com.group8.JourneySharing.service.RequestService;
 import com.group8.JourneySharing.service.UserService;
 import com.group8.JourneySharing.vo.NewJourneyVo;
 import com.group8.JourneySharing.exception.BadRequestException;
@@ -21,11 +25,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class JourneyServiceImpl implements JourneyService {
 
-    private static final ModelMapper modelMapper = new ModelMapper();
+        private static final ModelMapper modelMapper = new ModelMapper();
 
-    final static Logger LOGGER = LoggerFactory.getLogger(JourneyServiceImpl.class);
+        final static Logger LOGGER = LoggerFactory.getLogger(JourneyServiceImpl.class);
 
-    private JourneyRepository journeyRepository;
+        private JourneyRepository journeyRepository;
 
     @Autowired
     public void setJourneyRepository(JourneyRepository journeyRepository) {
@@ -35,6 +39,7 @@ public class JourneyServiceImpl implements JourneyService {
     @Autowired
     private UserService userService;
 
+
     public JourneyServiceImpl() {
         modelMapper.typeMap(NewJourneyVo.class, Journey.class).addMappings(mapper -> {
             mapper.skip(Journey::setJourneyId); // mapper sets the JourneyId with the ownerId!?!
@@ -43,7 +48,9 @@ public class JourneyServiceImpl implements JourneyService {
 
     @Override
     public Journey createJourney(NewJourneyVo newJourney) {
+        //Empty Arrylist for requests - Done
         Journey journey = modelMapper.map(newJourney, Journey.class);
+        journey.setRequests(new ArrayList<String>());
         Journey savedJourney = journeyRepository.save(journey);
         LOGGER.info("Journey with id {} created", savedJourney.getJourneyId());
         return savedJourney;
@@ -108,7 +115,16 @@ public class JourneyServiceImpl implements JourneyService {
                 journeysWithinRadius.add(journey);
             }
         }
-
         return journeysWithinRadius;
     }
+
+    @Override
+    public Journey saveJourney(Journey journey) {
+        //Updated Journey saves with requestID
+        Journey savedJourney = journeyRepository.save(journey);
+        LOGGER.info("Journey with id {} created", savedJourney.getJourneyId());
+        return savedJourney;
+    }
+
+
 }
