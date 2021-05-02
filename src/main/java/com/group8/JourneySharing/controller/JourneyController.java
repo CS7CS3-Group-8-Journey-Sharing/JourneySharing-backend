@@ -62,7 +62,7 @@ public class JourneyController {
     }
 
     //gets the journeys for which you are the owner which are not completed or which are recurring
-    @PostMapping(value = "/getjourneys")
+    @GetMapping(value = "/getjourneys")
     public ResponseEntity<List<Journey>> getJourneys(@RequestParam String userEmail) {
         LOGGER.info("getjourneys initiated: " + userEmail );
         userService.getUserByEmail(userEmail);
@@ -72,7 +72,7 @@ public class JourneyController {
     }
 
     //gets the journeys for which you are the participants
-    @PostMapping(value = "/gethistory")
+    @GetMapping(value = "/gethistory")
     public ResponseEntity<List<Journey>> getHistory(@RequestParam String userEmail) {
         LOGGER.info("getHistory initiated: " + userEmail );
         UserDetailsVo user = userService.getUserByEmail(userEmail);
