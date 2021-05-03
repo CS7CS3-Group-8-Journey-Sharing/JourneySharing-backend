@@ -35,8 +35,10 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public void setPasswordEncoder (PasswordEncoder passwordEncoder) {this.passwordEncoder = passwordEncoder;}
     
     @Autowired
     public void setUserRepository( UserRepository userRepository )
@@ -51,8 +53,12 @@ public class UserServiceImpl implements UserService {
         this.journeyRepository = journeyRepository;
     }
 
-    @Autowired
     private JourneyService journeyService;
+
+    @Autowired
+    public void setJourneyService(JourneyService journeyService) {
+        this.journeyService = journeyService;
+    }
 
     @Override
     public String addUser(NewUserVo newUser) {
@@ -162,7 +168,7 @@ public class UserServiceImpl implements UserService {
             if(user.getGender() == null || user.getGender() == Gender.NONE) {
                 user.setGender(userVo.getGender());
             }else {
-                LOGGER.info("Can change gender from one to another");
+                LOGGER.info("Can't change gender from one to another");
             }
         }
         if(userVo.getIban() != null)
