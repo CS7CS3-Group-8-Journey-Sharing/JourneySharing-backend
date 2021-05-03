@@ -121,4 +121,12 @@ public class JourneyController {
         LOGGER.info("getJourneysWithinRadiusForWomanOnly completed.");
         return new ResponseEntity<>(journeyList, HttpStatus.ACCEPTED);
     }
+
+    @GetMapping(value = "/getjourney")
+    public ResponseEntity<Journey> getJourneyById(@RequestParam String journeyId){
+        LOGGER.info("getjourney initiated with id: " + journeyId );
+        Journey journey = journeyService.getJourneyByID(journeyId);
+        LOGGER.info("getjourney completed.");
+        return new ResponseEntity<>(journey, HttpStatus.ACCEPTED);
+    }
 }
