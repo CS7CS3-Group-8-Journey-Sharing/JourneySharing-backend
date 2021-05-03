@@ -11,6 +11,9 @@ public class RequestsVo {
     private RequestStatus requestStatus;
     private ViewStatus viewStatus;
 
+    public RequestsVo() {
+    }
+
     public RequestsVo(String requestId, UserDetailsVo requestedUser, String journeyId, RequestStatus requestStatus, ViewStatus viewStatus) {
         this.requestId = requestId;
         this.requestedUser = requestedUser;

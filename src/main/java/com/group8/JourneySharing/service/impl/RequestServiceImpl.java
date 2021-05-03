@@ -84,7 +84,11 @@ public class RequestServiceImpl implements RequestService {
         for (Requests request: requests){
             if(request.getRequestStatus() == RequestStatus.pending)
             {
-                RequestsVo requestsVo = modelMapper.map(request, RequestsVo.class);
+                RequestsVo requestsVo = new RequestsVo();
+                requestsVo.setRequestId(request.getRequestId());
+                requestsVo.setRequestStatus(request.getRequestStatus());
+                requestsVo.setJourneyId(request.getJourneyId());
+                requestsVo.setViewStatus(request.getViewStatus());
                 requestsVo.setRequestedUser(userService.getUserByEmail(request.getRequestedUserEmail()));
                 pendingRequests.add(requestsVo);
             }
