@@ -151,7 +151,7 @@ public class UserServiceImpl implements UserService {
         }
         if(userVo.getPassword() != null)
         {
-            user.setPassword(userVo.getPassword());
+            user.setPassword(passwordEncoder.encode(userVo.getPassword()));
         }
         if(userVo.getAge() != null)
         {
