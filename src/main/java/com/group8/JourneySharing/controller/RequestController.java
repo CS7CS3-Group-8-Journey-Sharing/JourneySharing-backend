@@ -38,7 +38,7 @@ public class RequestController {
         LOGGER.info("Request initiated: " + userEmail.toString() + ""+ journeyId.toString());
         String savedRequestID = requestService.createRequest(userEmail,journeyId);
         LOGGER.info("Request completed ID: " + savedRequestID.toString() );
-        return savedRequestID;
+            return savedRequestID;
     }
 
     @GetMapping("/getRequests")

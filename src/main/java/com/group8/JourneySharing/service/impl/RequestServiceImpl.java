@@ -35,13 +35,22 @@ public class RequestServiceImpl implements RequestService {
     public void setRequestRepository(RequestRepository requestRepository) {
         this.requestRepository = requestRepository;
     }
-
-    @Autowired
     private JourneyService journeyService;
-
-    @Autowired
     private UserService userService;
 
+    @Autowired
+    public void setJourneyService(JourneyService journeyService) {
+        this.journeyService = journeyService;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+
+
+// Todo : test not Written
     @Override
     public String createRequest(String userEmail, String journeyId) {
         Journey journey = journeyService.getJourneyByID(journeyId);
@@ -70,7 +79,7 @@ public class RequestServiceImpl implements RequestService {
         return requests;
     }
 
-
+//Todo : Test Not written
     @Override
     public List<RequestsVo> getRequestsByEmail(String userEmail) {
         List<Journey> journeys = journeyService.getJourneys(userEmail);
@@ -109,6 +118,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public void denyRequest(String requestId) {
+        LOGGER.info("DenyRequest" + requestId);
         Requests requests = requestRepository.findById(requestId).get();
         requests.setRequestStatus(RequestStatus.denied);
         requests.setViewStatus(ViewStatus.seen);

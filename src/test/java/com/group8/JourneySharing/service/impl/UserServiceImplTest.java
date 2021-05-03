@@ -45,14 +45,14 @@ public class UserServiceImplTest {
 	@Test (expected = BadRequestException.class)
 	public void testUserWithDuplicateEmail()
 	{
-		given( userRepository.findByEmail( ArgumentMatchers.anyString())).willReturn( new User() );
+		given( userRepository.findByEmail(ArgumentMatchers.anyString())).willReturn(new User());
 		userServiceImpl.addUser(newUser);
 	}
 
 	@Test
 	public void testCreateUser()
 	{
-		given( userRepository.findByEmail(ArgumentMatchers.anyString())).willReturn( null );
+		given( userRepository.findByEmail(ArgumentMatchers.anyString())).willReturn(null);
 		given(userRepository.save(ArgumentMatchers.any(User.class))).willReturn(user);
 		userServiceImpl.addUser(newUser);
 	}

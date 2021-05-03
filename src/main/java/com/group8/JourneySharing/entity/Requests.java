@@ -32,6 +32,9 @@ public class Requests {
         this.viewStatus = viewStatus;
     }
 
+    public Requests(String requestId, String requestedUserEmail, String journeyId, RequestStatus pending, ViewStatus unseen) {
+    }
+
     public String getRequestId() {
         return requestId;
     }

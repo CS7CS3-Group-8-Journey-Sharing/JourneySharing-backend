@@ -24,6 +24,9 @@ public class RequestsVo {
         this.viewStatus = viewStatus;
     }
 
+    public RequestsVo(String requestId, UserDetailsVo userDetails, String journeyId, RequestStatus pending, ViewStatus unseen) {
+    }
+
     public String getRequestId() {
         return requestId;
     }

@@ -53,19 +53,14 @@ public class JourneyServiceImplTest {
         journeyServiceImpl.createJourney(newjourney);
 
     }
-
     @Test
     public void testGetJourneyById() {
         NewJourneyVo newJourney = new NewJourneyVo();
         Journey journey = modelMapper.map(newJourney, Journey.class);
         String journeyId = journey.getJourneyId();
-
         Journey retJourney = journeyServiceImpl.createJourney(newJourney);
-
         assertEquals(journey, retJourney);
-
         retJourney = journeyServiceImpl.getJourneyByID(journeyId);
-
         assertEquals(journey, retJourney);
     }
 
