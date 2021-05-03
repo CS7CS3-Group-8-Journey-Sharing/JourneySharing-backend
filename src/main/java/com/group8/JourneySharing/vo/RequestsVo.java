@@ -8,16 +8,18 @@ public class RequestsVo {
     private String requestId;
     private UserDetailsVo requestedUser;
     private String journeyId;
+    private String journeyName;
     private RequestStatus requestStatus;
     private ViewStatus viewStatus;
 
     public RequestsVo() {
     }
 
-    public RequestsVo(String requestId, UserDetailsVo requestedUser, String journeyId, RequestStatus requestStatus, ViewStatus viewStatus) {
+    public RequestsVo(String requestId, UserDetailsVo requestedUser, String journeyId, String journeyName, RequestStatus requestStatus, ViewStatus viewStatus) {
         this.requestId = requestId;
         this.requestedUser = requestedUser;
         this.journeyId = journeyId;
+        this.journeyName = journeyName;
         this.requestStatus = requestStatus;
         this.viewStatus = viewStatus;
     }
@@ -46,6 +48,14 @@ public class RequestsVo {
         this.journeyId = journeyId;
     }
 
+    public String getJourneyName() {
+        return journeyName;
+    }
+
+    public void setJourneyName(String journeyName) {
+        this.journeyName = journeyName;
+    }
+
     public RequestStatus getRequestStatus() {
         return requestStatus;
     }
@@ -68,6 +78,7 @@ public class RequestsVo {
                 "requestId='" + requestId + '\'' +
                 ", requestedUser=" + requestedUser +
                 ", journeydId='" + journeyId + '\'' +
+                ", journeydName='" + journeyName + '\'' +
                 ", requestStatus=" + requestStatus +
                 ", viewStatus=" + viewStatus +
                 '}';

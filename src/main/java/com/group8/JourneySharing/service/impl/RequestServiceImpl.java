@@ -53,7 +53,7 @@ public class RequestServiceImpl implements RequestService {
         {
             throw new BadRequestException("Can't accept request, journey has reached max number of participants");
         }
-        Requests requests = new Requests(userEmail,journeyId);
+        Requests requests = new Requests(userEmail,journeyId,journey.getName());
         Requests savedRequest = requestRepository.save(requests);
         journey.getRequests().add(savedRequest.getRequestId());
         journeyService.saveJourney(journey);
@@ -88,6 +88,7 @@ public class RequestServiceImpl implements RequestService {
                 requestsVo.setRequestId(request.getRequestId());
                 requestsVo.setRequestStatus(request.getRequestStatus());
                 requestsVo.setJourneyId(request.getJourneyId());
+                requestsVo.setJourneyName(request.getJourneyName());
                 requestsVo.setViewStatus(request.getViewStatus());
                 requestsVo.setRequestedUser(userService.getUserByEmail(request.getRequestedUserEmail()));
                 pendingRequests.add(requestsVo);

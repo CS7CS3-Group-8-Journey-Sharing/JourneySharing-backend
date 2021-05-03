@@ -10,21 +10,24 @@ public class Requests {
     private String requestId;
     private String requestedUserEmail;
     private String journeyId;
+    private String journeyName;
     private RequestStatus requestStatus = RequestStatus.pending;
     private ViewStatus viewStatus = ViewStatus.unseen;
 
     public Requests() {
     }
 
-    public Requests(String requestedUserEmail, String journeyId) {
+    public Requests(String requestedUserEmail, String journeyId, String journeyName) {
         this.requestedUserEmail = requestedUserEmail;
         this.journeyId = journeyId;
+        this.journeyName = journeyName;
     }
 
-    public Requests(String requestId, String requestedUserEmail, String journeyId, RequestStatus requestStatus, ViewStatus viewStatus) {
+    public Requests(String requestId, String requestedUserEmail, String journeyId, String journeyName, RequestStatus requestStatus, ViewStatus viewStatus) {
         this.requestId = requestId;
         this.requestedUserEmail = requestedUserEmail;
         this.journeyId = journeyId;
+        this.journeyName = journeyName;
         this.requestStatus = requestStatus;
         this.viewStatus = viewStatus;
     }
@@ -53,6 +56,13 @@ public class Requests {
         this.journeyId = journeyId;
     }
 
+    public String getJourneyName() {
+        return journeyName;
+    }
+
+    public void setJourneyName(String journeyName) {
+        this.journeyName = journeyName;
+    }
     public RequestStatus getRequestStatus() {
         return requestStatus;
     }
