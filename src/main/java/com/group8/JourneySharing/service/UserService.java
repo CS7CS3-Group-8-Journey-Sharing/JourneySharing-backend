@@ -1,7 +1,9 @@
 package com.group8.JourneySharing.service;
 
 import com.group8.JourneySharing.entity.User;
+import com.group8.JourneySharing.vo.EditUserVo;
 import com.group8.JourneySharing.vo.NewUserVo;
+import com.group8.JourneySharing.vo.PaymentVo;
 import com.group8.JourneySharing.vo.RatingVo;
 import com.group8.JourneySharing.vo.UserDetailsVo;
 
@@ -23,4 +25,8 @@ public interface UserService {
     double getRating(String userEmail);
 
     void deleteUser(String userEmail);
+
+    void editUser(String userEmail, EditUserVo user);
+
+    PaymentVo getPaymentDetails(String journeyId);
 }

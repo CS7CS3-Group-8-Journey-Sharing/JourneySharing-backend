@@ -28,6 +28,7 @@ public class Journey {
     private ArrayList<String> requests;
     private boolean active = false;
     private boolean womanOnly = false;
+    private double price;
 
     public Journey() {
     }
@@ -36,7 +37,7 @@ public class Journey {
 
     public Journey(String journeyId, String name, boolean recurring, boolean completed, String ownerEmail, ArrayList<String> participantEmails,
                    Location startLocation, Location endLocation, int maxParticipants, Date startTime, Date endTime, ModeOfTransport modeOfTransport, ArrayList<Location> stops, ArrayList<String> requests,
-                   boolean active, boolean womanOnly) {
+                   boolean active, boolean womanOnly, double price) {
         this.journeyId = journeyId;
         this.name = name;
         this.recurring = recurring;
@@ -53,6 +54,7 @@ public class Journey {
         this.requests = requests;
         this.active = active;
         this.womanOnly = womanOnly;
+        this.price = price;
     }
 
     public String getJourneyId() {
@@ -186,6 +188,14 @@ public class Journey {
         this.womanOnly = womanOnly;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "Journey{" +
@@ -205,6 +215,7 @@ public class Journey {
                 ", requests=" + requests +
                 ", active=" + active +
                 ", womanOnly=" + womanOnly +
+                ", price=" + price +
                 '}';
     }
 }

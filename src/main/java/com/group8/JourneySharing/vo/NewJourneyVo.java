@@ -35,6 +35,8 @@ public class NewJourneyVo {
 
     private boolean womanOnly = false;
 
+    private Double price = 0.0 ;
+
 
     public NewJourneyVo() {
         super();
@@ -42,7 +44,7 @@ public class NewJourneyVo {
 
     public NewJourneyVo(String name, boolean recurring, ArrayList<Boolean> recurringDays, String ownerEmail,
                         Location startLocation, Location endLocation, int maxParticipants, ArrayList<String> participantIds,
-                        Date startTime, Date endTime, ModeOfTransport modeOfTransport, boolean womanOnly) {
+                        Date startTime, Date endTime, ModeOfTransport modeOfTransport, boolean womanOnly , Double price) {
         this.name = name;
         this.recurring = recurring;
         this.recurringDays = recurringDays;
@@ -53,6 +55,7 @@ public class NewJourneyVo {
         this.startTime = startTime;
         this.modeOfTransport = modeOfTransport;
         this.womanOnly = womanOnly;
+        this.price = price;
     }
 
     public String getName() { return name; }
@@ -133,6 +136,14 @@ public class NewJourneyVo {
         this.womanOnly = womanOnly;
     }
 
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "NewJourneyVo{" +
@@ -145,6 +156,7 @@ public class NewJourneyVo {
                 ", startTime=" + startTime +
                 ", modeOfTransport=" + modeOfTransport +
                 ", womanOnly=" + womanOnly +
+                ", price=" + price +
                 '}';
     }
 }

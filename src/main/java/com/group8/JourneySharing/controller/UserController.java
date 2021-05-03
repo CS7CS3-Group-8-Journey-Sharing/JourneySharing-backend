@@ -3,6 +3,8 @@ package com.group8.JourneySharing.controller;
 
 import com.group8.JourneySharing.entity.User;
 import com.group8.JourneySharing.service.UserService;
+import com.group8.JourneySharing.vo.EditUserVo;
+import com.group8.JourneySharing.vo.PaymentVo;
 import com.group8.JourneySharing.vo.RatingVo;
 import com.group8.JourneySharing.vo.UserDetailsVo;
 import org.slf4j.Logger;
@@ -63,4 +65,20 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    @PostMapping(value = "/editUser")
+    public ResponseEntity<Void> editUser (@RequestParam String userEmail, @RequestBody EditUserVo user) {
+        LOGGER.info("editUser initiated: " + userEmail);
+        userService.editUser(userEmail, user);
+        LOGGER.info("editUser completed: " + userEmail);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping (value = "/getpaymentdetails")
+    public ResponseEntity<PaymentVo> getPaymentDetails (@RequestParam String journeyId)
+    {
+        LOGGER.info("getPaymentDetails initiated: " + journeyId);
+        PaymentVo paymentVo = userService.getPaymentDetails(journeyId);
+        LOGGER.info("getPaymentDetails completed: " + journeyId);
+        return new ResponseEntity<>(paymentVo, HttpStatus.OK);
+    }
 }
