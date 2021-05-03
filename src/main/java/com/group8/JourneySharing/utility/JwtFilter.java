@@ -29,7 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        LOGGER.info("Authorization started: "+httpServletRequest.getHeader("Authorization"));
+        //LOGGER.info("Authorization started: "+httpServletRequest.getHeader("Authorization"));
 
         String authorization = httpServletRequest.getHeader("Authorization");
         String token = null;
@@ -56,7 +56,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 );
 
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-                LOGGER.info(userName+ " authorized.");
+                //LOGGER.info(userName+ " authorized.");
             } else {
                 LOGGER.error("Jwt Token does not match with email: Token Email - "+userName);
             }

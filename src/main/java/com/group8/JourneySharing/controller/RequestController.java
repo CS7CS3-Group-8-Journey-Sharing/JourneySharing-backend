@@ -65,7 +65,7 @@ public class RequestController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @PostMapping(value = "/getyourrequests")
+    @GetMapping(value = "/getyourrequests")
     public ResponseEntity<List<Requests>> getRequestsYouMade(@RequestParam String userEmail) {
         LOGGER.info("getRequestsYouMade initiated: " + userEmail);
         List<Requests> requestList = requestService.getRequestsYouMade(userEmail);
