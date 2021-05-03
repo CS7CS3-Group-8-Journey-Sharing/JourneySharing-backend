@@ -1,6 +1,5 @@
 package com.group8.JourneySharing.entity.jwt;
 
-import com.group8.JourneySharing.entity.User;
 import com.group8.JourneySharing.vo.UserDetailsVo;
 
 public class JwtResponse {

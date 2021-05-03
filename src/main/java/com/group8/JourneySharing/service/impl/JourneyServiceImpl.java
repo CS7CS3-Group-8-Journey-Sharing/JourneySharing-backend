@@ -62,6 +62,7 @@ public class JourneyServiceImpl implements JourneyService {
     public Journey createJourney(NewJourneyVo newJourney) {
         Journey journey = modelMapper.map(newJourney, Journey.class);
         userService.getUserByEmail(newJourney.getOwnerEmail());
+        journey.setParticipantEmails(new ArrayList<String>());
         journey.setRequests(new ArrayList<String>());
         Journey savedJourney = journeyRepository.save(journey);
         LOGGER.info("Journey with id {} created", savedJourney.getJourneyId());

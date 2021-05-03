@@ -1,6 +1,5 @@
 package com.group8.JourneySharing.utility;
 
-import com.group8.JourneySharing.controller.UserController;
 import com.group8.JourneySharing.service.AuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
