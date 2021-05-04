@@ -9,9 +9,9 @@ public class RatingVo {
     private String userEmail;
 
     @NotNull(message = "rating is required parameter")
-    private Integer rating;
+    private Double rating;
 
-    public RatingVo(String userEmail,Integer rating) {
+    public RatingVo(String userEmail,Double rating) {
         this.userEmail = userEmail;
         this.rating = rating;
     }
@@ -24,11 +24,11 @@ public class RatingVo {
         this.userEmail = userEmail;
     }
 
-    public Integer getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 

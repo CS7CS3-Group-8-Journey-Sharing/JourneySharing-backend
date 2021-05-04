@@ -45,18 +45,26 @@ public class JourneyServiceImpl implements JourneyService {
         this.requestRepository = requestRepository;
     }
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
 
     public JourneyServiceImpl() {
         modelMapper.typeMap(NewJourneyVo.class, Journey.class).addMappings(mapper -> {
-            mapper.skip(Journey::setJourneyId); // mapper sets the JourneyId with the ownerId!?!
+            mapper.skip(Journey::setJourneyId);
         });
     }
 
-    @Autowired
     private RequestService requestService;
+
+    @Autowired
+    public void setRequestService (RequestService requestService) {
+        this.requestService = requestService;
+    }
 
     @Override
     public Journey createJourney(NewJourneyVo newJourney) {
