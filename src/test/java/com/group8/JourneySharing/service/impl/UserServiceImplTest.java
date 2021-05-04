@@ -16,8 +16,6 @@ import org.slf4j.LoggerFactory;
 
 import com.group8.JourneySharing.repository.UserRepository;
 
-import java.util.ArrayList;
-
 @RunWith ( MockitoJUnitRunner.class)
 public class UserServiceImplTest {
 	
@@ -38,7 +36,7 @@ public class UserServiceImplTest {
 		userServiceImpl = new UserServiceImpl();
 		userServiceImpl.setUserRepository(userRepository);
 		newUser = new NewUserVo("email", "password","firstName","lastName");
-		user = new User("email", "Unique char","password","firstName","lastName","mobile number","iban", null);
+		user = new User("email", "Unique char","password","firstName","lastName","mobile number","iban", null, null);
         userDetails = new UserDetailsVo("email", "firstName","lastName", "mobileNumber","iban", null);
 
 	}
@@ -73,13 +71,5 @@ public class UserServiceImplTest {
 		given(userRepository.findByEmail(ArgumentMatchers.anyString())).willReturn(user);
 		userServiceImpl.getUserByEmail(userDetails.getEmail().toLowerCase());
 	}
-
-
-
-
-
-
-
-
 
 }

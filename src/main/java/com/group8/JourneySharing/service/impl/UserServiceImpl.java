@@ -1,13 +1,19 @@
 package com.group8.JourneySharing.service.impl;
 
 
+import com.group8.JourneySharing.entity.Gender;
 import com.group8.JourneySharing.entity.Journey;
+import com.group8.JourneySharing.entity.Rating;
 import com.group8.JourneySharing.entity.User;
 import com.group8.JourneySharing.exception.BadRequestException;
 import com.group8.JourneySharing.repository.JourneyRepository;
 import com.group8.JourneySharing.repository.UserRepository;
+import com.group8.JourneySharing.service.JourneyService;
 import com.group8.JourneySharing.service.UserService;
+import com.group8.JourneySharing.vo.EditUserVo;
 import com.group8.JourneySharing.vo.NewUserVo;
+import com.group8.JourneySharing.vo.PaymentVo;
+import com.group8.JourneySharing.vo.RatingVo;
 import com.group8.JourneySharing.vo.UserDetailsVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,13 +44,15 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
-    @Autowired
     private JourneyRepository journeyRepository;
 
-//    @Autowired
-//    public void setJourneyRepository(JourneyRepository journeyRepository) {
-//        this.journeyRepository = journeyRepository;
-//    }
+    @Autowired
+    public void setJourneyRepository(JourneyRepository journeyRepository) {
+        this.journeyRepository = journeyRepository;
+    }
+
+    @Autowired
+    private JourneyService journeyService;
 
     @Override
     public String addUser(NewUserVo newUser) {
@@ -102,5 +111,82 @@ public class UserServiceImpl implements UserService {
         user.addHistory(journey.getJourneyId());
         User savedUser = userRepository.save(user);
         return savedUser;
+    }
+
+    @Override
+    public void addRating(List<RatingVo> ratings) {
+        for (RatingVo rating : ratings)
+        {
+            User user = userRepository.findByEmail(rating.getUserEmail().toLowerCase());
+            if(user == null)
+                continue;
+            user.getRating().addRating(rating.getRating());
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public double getRating(String userEmail) {
+        User user = userRepository.findByEmail(userEmail);
+        if(user == null)
+        {
+            throw new BadRequestException("User does not exist");
+        }
+        Rating userRating = user.getRating();
+        double rating =  userRating.getTotalRating()/userRating.getNumOfRating();
+        return  rating;
+    }
+
+    @Override
+    public void deleteUser(String userEmail) {
+        userRepository.deleteByEmail(userEmail);
+    }
+
+    @Override
+    public void editUser(String userEmail, EditUserVo userVo) {
+
+        User user = userRepository.findByEmail(userEmail.toLowerCase());
+        if(user == null){
+            throw new BadRequestException("Email "+userEmail+ " not found.");
+        }
+        if(userVo.getPassword() != null)
+        {
+            user.setPassword(passwordEncoder.encode(userVo.getPassword()));
+        }
+        if(userVo.getAge() != null)
+        {
+            user.setAge(userVo.getAge());
+        }
+        if(userVo.getGender() != null)
+        {
+            if(user.getGender() == null || user.getGender() == Gender.NONE) {
+                user.setGender(userVo.getGender());
+            }else {
+                LOGGER.info("Can change gender from one to another");
+            }
+        }
+        if(userVo.getIban() != null)
+        {
+            user.setIban(userVo.getIban());
+        }
+        if(userVo.getMobileNumber() != null)
+        {
+            user.setMobileNumber(userVo.getMobileNumber());
+        }
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public PaymentVo getPaymentDetails(String journeyId) {
+        Journey journey = journeyService.getJourneyByID(journeyId);
+        UserDetailsVo user = getUserByEmail(journey.getOwnerEmail());
+        if(user.getIban() == null && user.getMobileNumber() == null)
+        {
+            throw new BadRequestException("User has not set-up payment details");
+        }
+        PaymentVo paymentVo = new PaymentVo(journey.getOwnerEmail(), user.getIban(),
+                user.getMobileNumber(), journey.getPrice(),journey.getParticipantEmails());
+        return paymentVo;
     }
 }

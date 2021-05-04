@@ -1,5 +1,7 @@
 package com.group8.JourneySharing.vo;
 
+import com.group8.JourneySharing.entity.Gender;
+
 import javax.validation.constraints.NotEmpty;
 
 public class NewUserVo {
@@ -15,6 +17,10 @@ public class NewUserVo {
     @NotEmpty(message = "lastName is a required parameter")
     private String lastName;
 
+    private int age;
+
+    private Gender gender = Gender.NONE;
+
     public NewUserVo() {
         super();
     }
@@ -25,6 +31,16 @@ public class NewUserVo {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
+    public NewUserVo(String email, String password, String firstName, String lastName, int age, Gender gender) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -57,6 +73,22 @@ public class NewUserVo {
         this.lastName = lastName;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     @Override
     public String toString() {
         return "NewUser{" +
@@ -64,6 +96,8 @@ public class NewUserVo {
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", age='" + age + '\'' +
+                ", gender='" + gender + '\'' +
                 '}';
     }
 

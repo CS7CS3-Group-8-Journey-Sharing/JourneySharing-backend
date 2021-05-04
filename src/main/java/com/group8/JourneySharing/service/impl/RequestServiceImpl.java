@@ -1,12 +1,17 @@
 package com.group8.JourneySharing.service.impl;
 
+import com.group8.JourneySharing.entity.Gender;
 import com.group8.JourneySharing.entity.Journey;
 import com.group8.JourneySharing.entity.RequestStatus;
 import com.group8.JourneySharing.entity.Requests;
+import com.group8.JourneySharing.entity.ViewStatus;
+import com.group8.JourneySharing.exception.BadRequestException;
 import com.group8.JourneySharing.repository.RequestRepository;
 import com.group8.JourneySharing.service.JourneyService;
 import com.group8.JourneySharing.service.RequestService;
 import com.group8.JourneySharing.service.UserService;
+import com.group8.JourneySharing.vo.RequestsVo;
+import com.group8.JourneySharing.vo.UserDetailsVo;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,50 +37,99 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Autowired
-    private JourneyService journeySerive;
+    private JourneyService journeyService;
 
     @Autowired
     private UserService userService;
 
     @Override
     public String createRequest(String userEmail, String journeyId) {
-        //String journeyId = requests.getJourneydId().toLowerCase();
-        //get journey by id
-        // keep it here
-        Journey journey = journeySerive.getJourneyByID(journeyId);
-        Requests requets = new Requests(userEmail,journeyId);
-        Requests savedRequest = requestRepository.save(requets);
-        // request id
-        // savedjourney journeyserive impl
+        Journey journey = journeyService.getJourneyByID(journeyId);
+        UserDetailsVo user = userService.getUserByEmail(userEmail);
+        if(journey.isWomanOnly() && user.getGender()!= Gender.FEMALE) {
+            throw new BadRequestException("Can't accept request as its women only journey");
+        }
+        if(journey.getParticipantEmails().size() == journey.getMaxParticipants())
+        {
+            throw new BadRequestException("Can't accept request, journey has reached max number of participants");
+        }
+        Requests requests = new Requests(userEmail,journeyId,journey.getName());
+        Requests savedRequest = requestRepository.save(requests);
         journey.getRequests().add(savedRequest.getRequestId());
-        Journey updatedjourney= journeySerive.saveJourney(journey);
-        LOGGER.info("User saved with id {}", savedRequest.getRequestId());
-        LOGGER.info("User saved with id {}", updatedjourney.getJourneyId());
+        journeyService.saveJourney(journey);
         return savedRequest.getRequestId();
     }
-    public RequestStatus getRequest(String id) {
-        Optional<Requests> savedRequest = requestRepository.findById(id);
-        Requests req = savedRequest.get();
-        return req.getRequestStatus();
+
+    @Override
+    public Requests getRequest(String id) {
+        Optional<Requests> requestsOptional = requestRepository.findById(id);
+        if(!requestsOptional.isPresent()) {
+            throw new BadRequestException("Invalid request");
+        }
+        Requests requests = requestsOptional.get();
+        return requests;
     }
 
 
     @Override
-    public List<Requests> getRequestsByEmail(String userEmail) {
-        List<Journey> journeys = journeySerive.getJourneys(userEmail);
+    public List<RequestsVo> getRequestsByEmail(String userEmail) {
+        List<Journey> journeys = journeyService.getJourneys(userEmail);
         ArrayList<String> requestedId = new ArrayList<>();
         for(Journey journey : journeys)
         {
             requestedId.addAll(journey.getRequests());
         }
         List<Requests> requests = (List<Requests>)requestRepository.findAllById(requestedId);
-        List<Requests> pendingRequests = new ArrayList<>();
+        List<RequestsVo> pendingRequests = new ArrayList<>();
         for (Requests request: requests){
+            if(request.getRequestStatus() == RequestStatus.pending)
+            {
+                RequestsVo requestsVo = new RequestsVo();
+                requestsVo.setRequestId(request.getRequestId());
+                requestsVo.setRequestStatus(request.getRequestStatus());
+                requestsVo.setJourneyId(request.getJourneyId());
+                requestsVo.setJourneyName(request.getJourneyName());
+                requestsVo.setViewStatus(request.getViewStatus());
+                requestsVo.setRequestedUser(userService.getUserByEmail(request.getRequestedUserEmail()));
+                pendingRequests.add(requestsVo);
+            }
+        }
+        return pendingRequests;
+    }
+
+    @Override
+    public void updateToSeen(List<String> requestIds) {
+        for (String requestId : requestIds)
+        {
+            Requests requests = requestRepository.findById(requestId).get();
+            requests.setViewStatus(ViewStatus.seen);
+            requestRepository.save(requests);
+        }
+    }
+
+    @Override
+    public void denyRequest(String requestId) {
+        Requests requests = requestRepository.findById(requestId).get();
+        requests.setRequestStatus(RequestStatus.denied);
+        requests.setViewStatus(ViewStatus.seen);
+        requestRepository.save(requests);
+    }
+
+    @Override
+    public List<Requests> getRequestsYouMade(String userEmail) {
+        List<Requests>  requests = requestRepository.findByRequestedUserEmail(userEmail);
+        List<Requests> pendingRequests = new ArrayList<>();
+        for(Requests request : requests) {
             if(request.getRequestStatus() == RequestStatus.pending)
             {
                 pendingRequests.add(request);
             }
         }
         return pendingRequests;
+    }
+
+    @Override
+    public void deleteRequest(String requestId) {
+        requestRepository.deleteById(requestId);
     }
 }

@@ -1,10 +1,7 @@
 package com.group8.JourneySharing.service;
 
-import com.group8.JourneySharing.controller.UserController;
 import com.group8.JourneySharing.entity.User;
 import com.group8.JourneySharing.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
